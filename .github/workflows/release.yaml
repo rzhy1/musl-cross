@@ -44,23 +44,13 @@ jobs:
           path: x86_64-w64-mingw32.tar.xz.sha256
           if-no-files-found: error
           retention-days: 1
-
-  release:
-    name: Release
-    runs-on: ubuntu-24.04
-    needs: build
-    if: github.event_name == 'release'
-    steps:
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release
-          pattern: "*.tar.xz"
-          merge-multiple: true
+          
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref }} 
           name: Release ${{ github.ref }} 
-          artifacts: release/x86_64-w64-mingw32.tar.xz
+          artifacts: x86_64-w64-mingw32.tar.xz
           token: ${{ secrets.GITHUB_TOKEN }}
+
+      
