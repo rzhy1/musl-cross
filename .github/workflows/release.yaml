@@ -1,7 +1,6 @@
 name: Release
 
 on:
-  on:
   workflow_dispatch:
   push:
     branches:
@@ -14,7 +13,6 @@ on:
       - released
   schedule:
     - cron: "0 0 * * *"
-
 
 jobs:
   build:
