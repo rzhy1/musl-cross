@@ -20,9 +20,6 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       fail-fast: true
-      matrix:
-        target:
-          - x86_64-w64-mingw32
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,19 +29,19 @@ jobs:
       - name: Build
         run: |
           sudo rm -rf /opt/*
-          ./scripts/make ${{ matrix.target }}
+          ./scripts/make x86_64-w64-mingw32
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}.tar.xz
-          path: ${{ matrix.target }}.tar.xz
+          name: x86_64-w64-mingw32.tar.xz
+          path: x86_64-w64-mingw32.tar.xz
           if-no-files-found: error
           retention-days: 1
       - name: Upload checksum
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}.tar.xz.sha256
-          path: ${{ matrix.target }}.tar.xz.sha256
+          name: x86_64-w64-mingw32.tar.xz.sha256
+          path: x86_64-w64-mingw32.tar.xz.sha256
           if-no-files-found: error
           retention-days: 1
 
