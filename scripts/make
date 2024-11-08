@@ -63,6 +63,35 @@ ct-ng build
 popd
 
 # tarball
+URL="https://github.com/rzhy1/build-mingw-w64/releases/download/mingw-w64/mingw-w64-x86_64-toolchain.zip"
+if ! curl -SLf -o "/tmp/toolchain.zip" "${URL}"; then
+  echo "下载工具链失败" >&2
+  exit 1
+fi
+
+# 解压工具链
+if ! unzip -o "/tmp/toolchain.zip" -d "/tmp"; then
+  echo "解压工具链失败" >&2
+  exit 1
+fi
+
+# 获取解压后的工具链目录
+EXTRACTED_TOOLCHAIN_DIR="/tmp/mingw64"
+
+# 检查目标目录是否存在
+if [ ! -d "/opt/x-tools/${TARGET}" ]; then
+  echo "目标目录不存在，请先构建工具链" >&2
+  exit 1
+fi
+
+# 覆盖工具链
+if ! rsync -avf "${EXTRACTED_TOOLCHAIN_DIR}/" "/opt/x-tools/${TARGET}/"; then
+    echo "覆盖工具链失败" >&2
+    exit 1
+fi
+
+# 删除临时文件
+rm -f "/tmp/toolchain.zip"
 sudo mv /opt/x-tools/${TARGET} .
 sudo chown -R root:root ${TARGET}
 sudo tar -cJvf ${TARGET}.tar.xz ${TARGET}
