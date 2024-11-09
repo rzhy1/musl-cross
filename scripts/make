@@ -58,6 +58,8 @@ sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
+echo "查询.config内容1"
+build/.config
 pushd build
 ct-ng olddefconfig
 echo "查询.config内容"
