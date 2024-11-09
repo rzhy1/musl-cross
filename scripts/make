@@ -2,7 +2,7 @@
 
 set -e
 
-TARGET=$1
+TARGET="x86_64-w64-mingw32"
 
 # packages
 sudo apt-get update
