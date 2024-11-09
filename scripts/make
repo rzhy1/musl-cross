@@ -59,6 +59,7 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
+ct-ng distclean
 ct-ng build
 popd
 
