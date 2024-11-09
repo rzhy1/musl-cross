@@ -59,9 +59,6 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
-
-echo "查看当前配置"
-cat build/.config
 echo "图形化配置界面"
 ct-ng menuconfig
 echo "显示所有配置项"
