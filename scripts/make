@@ -58,8 +58,8 @@ sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
-ct-ng olddefconfig
 ct-ng distclean
+ct-ng olddefconfig
 ct-ng build
 popd
 
