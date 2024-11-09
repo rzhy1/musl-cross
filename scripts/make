@@ -59,10 +59,12 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
-echo "图形化配置界面"
-ct-ng menuconfig
+
 echo "显示所有配置项"
 ct-ng show-config
+echo "图形化配置界面"
+export TERM=xterm-256color
+ct-ng menuconfig
 echo "开始执行ct-ng build"
 ct-ng build
 popd
