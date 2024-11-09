@@ -77,7 +77,7 @@ if ! curl -SLf -o "/tmp/toolchain.zip" "${URL}"; then
 fi
 
 # 解压工具链
-if ! unzip -o "/tmp/toolchain.zip" -d "/tmp"; then
+if ! unzip -o "/tmp/toolchain.zip" -d "/tmp/mingw64"; then
   echo "解压工具链失败" >&2
   exit 1
 fi
