@@ -44,14 +44,20 @@ popd
 
 # crosstool-ng
 echo "编译ct-ng版本"
-if [ ! -e /usr/bin/ct-ng ]; then
-    pushd builder
-    ./bootstrap
-    ./configure --prefix=/usr
-    make -j`nproc`
-    sudo make install
-    popd
-fi
+#if [ ! -e /usr/bin/ct-ng ]; then
+#    pushd builder
+#    ./bootstrap
+#    ./configure --prefix=/usr
+#    make -j`nproc`
+#    sudo make install
+#    popd
+#fi
+git clone https://github.com/crosstool-ng/crosstool-ng.git
+cd crosstool-ng
+./bootstrap
+./configure --prefix=/usr
+make -j`nproc`
+sudo make install
 
 # build
 sudo mkdir -p /opt
