@@ -60,6 +60,10 @@ cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
 
+echo "显示所有配置项"
+ct-ng show-config
+echo "查看 .config 文件"
+cat /home/runner/work/musl-cross/musl-cross/build/.config
 echo "开始执行ct-ng build"
 ct-ng build
 popd
