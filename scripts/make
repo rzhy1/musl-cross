@@ -43,6 +43,7 @@ done
 popd
 
 # crosstool-ng
+echo "编译ct-ng版本"
 if [ ! -e /usr/bin/ct-ng ]; then
     pushd builder
     ./bootstrap
@@ -58,6 +59,8 @@ sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
+echo "查询ct-ng版本"
+ct-ng --version
 echo "ct-ng distclean 清理"
 ct-ng distclean
 cp ../targets/${TARGET}/config .config
