@@ -15,6 +15,23 @@ CT_MINGW_DDK=y
 CT_THREADS_POSIX=y
 CT_CC_LANG_CXX=y
 CT_PARALLEL_JOBS=14
-CT_GMP_V_6_2=n
+
+CT_GMP_DIR_NAME="gmp"
+CT_GMP_PKG_NAME="gmp"
+CT_GMP_SRC_RELEASE=y
+# CT_GMP_SRC_DEVEL is not set
+CT_GMP_SRC_CUSTOM=y
+CT_GMP_PATCH_GLOBAL=y
+# CT_GMP_PATCH_BUNDLED is not set
+# CT_GMP_PATCH_LOCAL is not set
+# CT_GMP_PATCH_BUNDLED_LOCAL is not set
+# CT_GMP_PATCH_LOCAL_BUNDLED is not set
+# CT_GMP_PATCH_NONE is not set
+CT_GMP_PATCH_ORDER="global"
+# CT_GMP_V_6_2 is not set
+# CT_GMP_V_6_1 is not set
 CT_GMP_VERSION="6.3.0"
-CT_GMP_MIRRORS="https://gmplib.org/download/gmp"
+CT_GMP_MIRRORS="https://gmplib.org/download/gmp  $(CT_Mirrors GNU gmp)"
+CT_GMP_ARCHIVE_FILENAME="@{pkg_name}-@{version}"
+CT_GMP_ARCHIVE_DIRNAME="@{pkg_name}-@{version}"
+CT_GMP_ARCHIVE_FORMATS=".tar.xz .tar.lz .tar.bz2"
