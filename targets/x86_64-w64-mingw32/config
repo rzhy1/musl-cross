@@ -21,6 +21,7 @@ CT_GMP_PKG_NAME="gmp"
 CT_GMP_SRC_RELEASE=y
 # CT_GMP_SRC_DEVEL is not set
 CT_GMP_SRC_CUSTOM=y
+CT_GMP_CUSTOM_LOCATION="https://gmplib.org/download/gmp/gmp-6.3.0.tar.xz"
 CT_GMP_PATCH_GLOBAL=y
 # CT_GMP_PATCH_BUNDLED is not set
 # CT_GMP_PATCH_LOCAL is not set
