@@ -29,7 +29,7 @@ CT_GMP_PATCH_GLOBAL=y
 # CT_GMP_PATCH_LOCAL_BUNDLED is not set
 # CT_GMP_PATCH_NONE is not set
 CT_GMP_PATCH_ORDER="global"
-CT_GMP_V_6_3=y
+CT_GMP_V_6_2=n
 # CT_GMP_V_6_1 is not set
 CT_GMP_VERSION="6.3.0"
 CT_GMP_MIRRORS="https://gmplib.org/download/gmp/"
