@@ -85,7 +85,7 @@ if [ ! -d "/opt/x-tools/${TARGET}" ]; then
 fi
 
 # 覆盖工具链
-if ! rsync -avf "${EXTRACTED_TOOLCHAIN_DIR}/" "/opt/x-tools/${TARGET}/"; then
+if ! rsync -avr "${EXTRACTED_TOOLCHAIN_DIR}/" "/opt/x-tools/${TARGET}/"; then
     echo "覆盖工具链失败" >&2
     exit 1
 fi
