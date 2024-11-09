@@ -59,12 +59,9 @@ sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
-echo "查找ct-ng"
-which ct-ng
-echo "查询ct-ng版本"
-/usr/bin/ct-ng --version
 ct-ng olddefconfig
-echo "开始ct-ng build"
+echo "查询.config内容"
+cat /home/runner/work/musl-cross/musl-cross/build/.config
 ct-ng build
 popd
 
