@@ -50,8 +50,6 @@ if [ ! -e /usr/bin/ct-ng ]; then
     ./configure --prefix=/usr
     make -j`nproc`
     sudo make install
-    echo "查询ct-ng版本"
-    ct-ng --version
     popd
 fi
 
@@ -64,11 +62,7 @@ pushd build
 echo "查找ct-ng"
 which ct-ng
 echo "查询ct-ng版本"
-ct-ng --version
-echo "ct-ng distclean 清理"
-ct-ng distclean
-cp ../targets/${TARGET}/config .config
-echo "olddefconfig配置"
+/usr/local/bin/ct-ng --version
 ct-ng olddefconfig
 echo "开始ct-ng build"
 ct-ng build
