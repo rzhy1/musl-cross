@@ -62,7 +62,7 @@ echo "查询.config内容1"
 cat build/.config
 pushd build
 ct-ng olddefconfig
-sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' build/.config
+sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' /home/runner/work/musl-cross/musl-cross/build/.config
 echo "查询.config内容"
 cat /home/runner/work/musl-cross/musl-cross/build/.config
 ct-ng build
