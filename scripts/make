@@ -58,8 +58,12 @@ sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
+echo "ct-ng distclean 清理"
 ct-ng distclean
+cp ../targets/${TARGET}/config .config
+echo "olddefconfig配置"
 ct-ng olddefconfig
+echo "开始ct-ng build"
 ct-ng build
 popd
 
