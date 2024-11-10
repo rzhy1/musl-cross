@@ -68,7 +68,7 @@ cp targets/${TARGET}/config build/.config
 echo "挂载 tmpfs 到 ./build 目录"
 sudo mount -t tmpfs -o size=4G tmpfs ./build
 echo "查询.config内容1"
-cat build/.config
+#cat build/.config
 pushd build
 ct-ng olddefconfig
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
