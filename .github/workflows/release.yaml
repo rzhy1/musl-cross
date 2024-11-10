@@ -26,10 +26,18 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
+     
+      - name: Cache crosstool-NG tarballs
+        uses: actions/cache@v3
+        with:
+            path: ~/.ccache
+            key: ccache-${{ runner.os }}-${{ hashFiles('targets/x86_64-w64-mingw32/config') }}
+    
       - name: Build
         run: |
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
+     
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
@@ -37,6 +45,7 @@ jobs:
           path: x86_64-w64-mingw32.tar.xz
           if-no-files-found: error
           retention-days: 1
+     
       - name: Upload checksum
         uses: actions/upload-artifact@v4
         with:
