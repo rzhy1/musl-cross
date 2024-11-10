@@ -60,15 +60,13 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 echo "查询.config内容1"
 cat build/.config
-echo "查看ct-ng内容"
-cat /usr/bin/ct-ng
 pushd build
 ct-ng olddefconfig
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
 sed -i 's|CT_GMP_MIRRORS="https://gmplib.org/download/gmp https://gmplib.org/download/gmp/archive $(CT_Mirrors GNU gmp)"|CT_GMP_MIRRORS="https://gmplib.org/download/gmp $(CT_Mirrors GNU gmp)"|' $(pwd)/.config
 sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors GNU mpc)"|CT_MPC_MIRRORS="https://ftp.gnu.org/gnu/mpc $(CT_Mirrors GNU mpc)"|' $(pwd)/.config
-sed -i "s|CT_ZLIB_MIRRORS=\"https://github.com/madler/zlib/releases/download/v${CT_ZLIB_VERSION} https://www.zlib.net/\"|CT_ZLIB_MIRRORS=\"https://www.zlib.net/\"|" $(pwd)/.config
+envsubst < $(pwd)/.config | sed 's|CT_ZLIB_MIRRORS="https://github.com/madler/zlib/releases/download/v${CT_ZLIB_VERSION} https://www.zlib.net/"|CT_ZLIB_MIRRORS="https://www.zlib.net/"|' > $(pwd)/.config.new && mv $(pwd)/.config.new $(pwd)/.config
 sed -i "s|CT_ZSTD_MIRRORS="https://github.com/facebook/zstd/releases/download/v${CT_ZSTD_VERSION} https://www.zstd.net/"|CT_ZSTD_MIRRORS="https://github.com/facebook/zstd/releases/download/v${CT_ZSTD_VERSION}"|" $(pwd)/.config
 echo "查询.config内容"
 cat $(pwd)/.config
