@@ -61,6 +61,8 @@ cp targets/${TARGET}/config build/.config
 echo "查询.config内容1"
 cat build/.config
 pushd build
+echo "显示ct-ng帮助"
+ct-ng --help
 ct-ng olddefconfig -C .config
 #sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' /home/runner/work/musl-cross/musl-cross/build/.config
 #sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' /home/runner/work/musl-cross/musl-cross/build/.config
