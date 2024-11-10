@@ -57,11 +57,11 @@ fi
 sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
-cp targets/${TARGET}/config build/.config_custom
+cp targets/${TARGET}/config build/.config
 echo "查询.config内容1"
-cat build/.config_custom
+cat build/.config
 pushd build
-ct-ng olddefconfig -C .config_custom
+ct-ng olddefconfig -C .config
 #sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' /home/runner/work/musl-cross/musl-cross/build/.config
 #sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' /home/runner/work/musl-cross/musl-cross/build/.config
 echo "查询.config内容"
