@@ -62,6 +62,7 @@ echo "查询.config内容1"
 cat build/.config
 pushd build
 echo "显示ct-ng帮助"
+ls -l /usr/bin/ct-ng
 ct-ng --help
 ct-ng olddefconfig -C .config
 #sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' /home/runner/work/musl-cross/musl-cross/build/.config
