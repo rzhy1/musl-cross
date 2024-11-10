@@ -31,7 +31,7 @@ sudo apt-get install -y --no-install-recommends \
   texinfo \
   unzip \
   wget \
-  xz-utils
+  xz-utils \
   ccache
 
 # 设置 ccache
@@ -65,6 +65,8 @@ sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
+echo "挂载 tmpfs 到 ./build 目录"
+sudo mount -t tmpfs -o size=4G tmpfs ./build
 echo "查询.config内容1"
 cat build/.config
 pushd build
