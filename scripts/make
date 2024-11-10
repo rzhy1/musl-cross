@@ -36,8 +36,7 @@ sudo apt-get install -y --no-install-recommends \
 
 # 设置 ccache
 export CCACHE_DIR="$HOME/.ccache"
-export CC="ccache gcc"
-export CXX="ccache g++"
+export PATH="/usr/lib/ccache:$PATH"
 ccache --max-size=2G
 
 # patch
