@@ -60,6 +60,8 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 echo "查询.config内容1"
 cat build/.config
+echo "查看ct-ng内容"
+cat /usr/bin/ct-ng
 pushd build
 ct-ng olddefconfig
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
