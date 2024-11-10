@@ -28,7 +28,7 @@ jobs:
           submodules: true
      
       - name: Cache crosstool-NG tarballs
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
             path: ~/.ccache
             key: ccache-${{ runner.os }}-${{ hashFiles('targets/x86_64-w64-mingw32/config') }}
