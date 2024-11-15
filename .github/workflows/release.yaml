@@ -30,11 +30,11 @@ jobs:
       - name: Cache crosstool-NG tarballs
         uses: actions/cache@v4
         with:
-        path: |
-          ~/.ccache
-          ./builder
-          ./targets
-          ./src
+          path: |
+            ~/.ccache
+            ./builder
+            ./targets
+            ./src
           key: ${{ runner.os }}-ct-ng-${{ hashFiles('**/Makefile', '**/*.c', '**/*.h') }}-${{ hashFiles('**/targets/*/config') }}-${{ github.sha }}
           restore-keys: |
               ${{ runner.os }}-ct-ng-${{ hashFiles('**/Makefile', '**/*.c', '**/*.h') }}-
