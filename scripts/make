@@ -40,13 +40,13 @@ export PATH="/usr/lib/ccache:$PATH"
 ccache --max-size=2G
 
 # patch
-pushd builder
-for i in ../targets/${TARGET}/*; do
-    if [[ $i == *.patch ]]; then
-        patch -Np1 -f -i $i
-    fi
-done
-popd
+#pushd builder
+#for i in ../targets/${TARGET}/*; do
+#    if [[ $i == *.patch ]]; then
+#        patch -Np1 -i $i
+#    fi
+#done
+#popd
 
 # crosstool-ng
 echo "编译ct-ng版本"
