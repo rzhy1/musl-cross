@@ -43,7 +43,7 @@ ccache --max-size=2G
 pushd builder
 for i in ../targets/${TARGET}/*; do
     if [[ $i == *.patch ]]; then
-        patch -Np1 -i $i
+        patch -Np1 -i -f $i
     fi
 done
 popd
