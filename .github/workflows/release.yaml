@@ -65,5 +65,8 @@ jobs:
           allowUpdates: true
           artifacts: x86_64-w64-mingw32.tar.xz
           token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Show ccache stats
+        run: ccache -s -v
 
       
