@@ -33,8 +33,9 @@ jobs:
           path: |
             ~/.ccache
             ./builder
+            ./targets
             ./src
-          key: ${{ runner.os }}-ct-ng-${{ hashFiles('**/Makefile', '**/*.c', '**/*.h') }}-${{ github.sha }}
+          key: ${{ runner.os }}-ct-ng-${{ hashFiles('**/Makefile', '**/*.c', '**/*.h') }}-${{ hashFiles('**/targets/*/config') }}-${{ github.sha }}
           restore-keys: |
               ${{ runner.os }}-ct-ng-${{ hashFiles('**/Makefile', '**/*.c', '**/*.h') }}-
               ${{ runner.os }}-ct-ng-
