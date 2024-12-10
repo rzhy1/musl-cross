@@ -23,6 +23,8 @@ jobs:
     strategy:
       fail-fast: true
     steps:
+      - name: Check Git version
+        run: git --version
       - name: Checkout
         uses: actions/checkout@v4
         with:
