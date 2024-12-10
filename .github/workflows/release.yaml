@@ -17,14 +17,10 @@ on:
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-24.04
-    container:
-      image: ubuntu:rolling
+    runs-on: ubuntu-24.10
     strategy:
       fail-fast: true
     steps:
-      - name: Check Git version
-        run: git --version
       - name: Checkout
         uses: actions/checkout@v4
         with:
