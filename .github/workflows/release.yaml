@@ -43,6 +43,7 @@ jobs:
     
       - name: Build
         run: |
+          gh workflow run --list
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
      
