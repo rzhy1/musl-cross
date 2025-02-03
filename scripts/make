@@ -58,7 +58,13 @@ if [ ! -e /usr/bin/ct-ng ]; then
     sudo make install
     popd
 fi
-
+# 设置 gcc 版本描述文件
+GCC_REPO="http://gcc.gnu.org/git/gcc.git"
+GCC_BRANCH="trunk"
+GCC_DESC_FILE=$(pwd)/builder/packages/gcc/14.2.0/version.desc 
+echo "Generating custom version.desc file for gcc" > "$GCC_DESC_FILE"
+echo "repo = \"$GCC_REPO\"" >> "$GCC_DESC_FILE"
+echo "branch = \"$GCC_BRANCH\"" >> "$GCC_DESC_FILE"
 # build
 sudo mkdir -p /opt
 sudo chmod 0777 /opt
@@ -72,9 +78,8 @@ sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
 sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
 sed -i 's|CT_GCC_MIRRORS=".*"|CT_GCC_MIRRORS="https://gcc.gnu.org/git/gcc.git"|' $(pwd)/.config
-echo 'CT_GCC_DEVEL_VCS="git"' >> $(pwd)/.config
-echo 'CT_GCC_CUSTOM_LOCATION="https://gcc.gnu.org/git/gcc.git -b trunk"' >> $(pwd)/.config
-#$(pwd)/builder/packages/gcc/14.2.0/version.desc
+#echo 'CT_GCC_DEVEL_VCS="git"' >> $(pwd)/.config
+#echo 'CT_GCC_CUSTOM_LOCATION="https://gcc.gnu.org/git/gcc.git -b trunk"' >> $(pwd)/.config
 
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
@@ -83,8 +88,8 @@ sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors 
 echo "显示"
 cat $(pwd)/.config
 echo "显示1"
-git ls-remote https://gcc.gnu.org/git/gcc.git trunk
-sudo find / -type f -name "version.desc"
+#git ls-remote https://gcc.gnu.org/git/gcc.git trunk
+#sudo find / -type f -name "version.desc"
 echo "显示2"
 ct-ng build.$(nproc)
 popd
