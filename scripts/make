@@ -68,6 +68,7 @@ pushd build
 ct-ng olddefconfig
 
 # 将 gcc 的来源设置为 git， 并取消 release 和 custom
+sed -i 's/CT_GCC_V_14=y/CT_GCC_V_15=y/' $(pwd)/.config
 sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $(pwd)/.config
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
 sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
