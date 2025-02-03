@@ -64,15 +64,11 @@ sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
-# 输出 config/versions/*.in 文件内容
-echo "==== config/versions/*.in 文件内容 ===="
-for file in builder/config/versions/*.in; do
- echo "==== $file ===="
- cat "$file"
-done
-echo "==== config/versions/*.in 文件内容 ===="
 pushd build
 ct-ng olddefconfig
+echo "显示"
+cat $(pwd)/.config
+echo "显示结束"
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
 sed -i 's|CT_GMP_MIRRORS="https://gmplib.org/download/gmp https://gmplib.org/download/gmp/archive $(CT_Mirrors GNU gmp)"|CT_GMP_MIRRORS="https://gmplib.org/download/gmp $(CT_Mirrors GNU gmp)"|' $(pwd)/.config
