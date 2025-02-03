@@ -59,7 +59,7 @@ if [ ! -e /usr/bin/ct-ng ]; then
     popd
 fi
 echo "阿迪斯发顺丰1"
-$(pwd)
+echo "当期路径: $(pwd)"
 cat $GITHUB_WORKSPACE/builder/packages/gcc/14.2.0/version.desc 
 # 设置 gcc 版本描述文件
 GCC_REPO="http://gcc.gnu.org/git/gcc.git"
