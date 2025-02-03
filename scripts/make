@@ -86,7 +86,7 @@ echo "显示"
 cat $(pwd)/.config
 echo "显示1"
 git ls-remote https://gcc.gnu.org/git/gcc.git trunk
-find / -name "version.desc"
+sudo find / -name "version.desc"
 echo "显示2"
 ct-ng build.$(nproc)
 popd
