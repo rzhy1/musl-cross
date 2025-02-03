@@ -59,16 +59,16 @@ if [ ! -e /usr/bin/ct-ng ]; then
     popd
 fi
 echo "阿迪斯发顺丰1"
-cat /home/runner/work/musl-cross/musl-cross/builder/packages/gcc/14.2.0/version.desc 
+cat ${{ github.workspace }}/builder/packages/gcc/14.2.0/version.desc 
 # 设置 gcc 版本描述文件
 GCC_REPO="http://gcc.gnu.org/git/gcc.git"
 GCC_BRANCH="trunk"
-GCC_DESC_FILE=/home/runner/work/musl-cross/musl-cross/builder/packages/gcc/14.2.0/version.desc 
+GCC_DESC_FILE=${{ github.workspace }}/builder/packages/gcc/14.2.0/version.desc 
 > "$GCC_DESC_FILE"
 echo "repo = \"$GCC_REPO\"" >> "$GCC_DESC_FILE"
 echo "branch = \"$GCC_BRANCH\"" >> "$GCC_DESC_FILE"
 echo "阿迪斯发顺丰2"
-cat /home/runner/work/musl-cross/musl-cross/builder/packages/gcc/14.2.0/version.desc
+cat ${{ github.workspace }}/builder/packages/gcc/14.2.0/version.desc
 echo "阿迪斯发顺丰3"
 # build
 sudo mkdir -p /opt
