@@ -69,10 +69,12 @@ ct-ng olddefconfig
 
 # 使用 sed 修改 ct-ng 的配置
 # 将 gcc 的来源设置为 git， 并取消 release 和 custom
+sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $(pwd)/.config
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
 sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
 sed -i 's/CT_GCC_VERSION="14.2.0"/CT_GCC_VERSION="15.0.1"/' $(pwd)/.config
 sed -i 's|CT_GCC_MIRRORS=".*"|CT_GCC_MIRRORS="git://gcc.gnu.org/git/gcc.git"|' $(pwd)/.config
+echo 'CT_GCC_CUSTOM_LOCATION="git://gcc.gnu.org/git/gcc.git -b releases/gcc-15"' >> $(pwd)/.config
 
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
