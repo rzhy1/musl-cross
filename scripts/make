@@ -85,7 +85,7 @@ sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors 
 echo "显示"
 cat $(pwd)/.config
 echo "显示1"
-git ls-remote --heads git://gcc.gnu.org/git/gcc.git
+git ls-remote git://gcc.gnu.org/git/gcc.git trunk
 echo "显示2"
 ct-ng build.$(nproc)
 popd
