@@ -58,19 +58,7 @@ if [ ! -e /usr/bin/ct-ng ]; then
     sudo make install
     popd
 fi
-echo "阿迪斯发顺丰1"
-echo "当期路径: $(pwd)"
-cat $(pwd)/builder/packages/gcc/14.2.0/version.desc 
-# 设置 gcc 版本描述文件
-GCC_REPO="http://gcc.gnu.org/git/gcc.git"
-GCC_BRANCH="trunk"
-GCC_DESC_FILE=$(pwd)/builder/packages/gcc/14.2.0/version.desc 
-> "$GCC_DESC_FILE"
-echo "repo = \"$GCC_REPO\"" >> "$GCC_DESC_FILE"
-echo "branch = \"$GCC_BRANCH\"" >> "$GCC_DESC_FILE"
-echo "阿迪斯发顺丰2"
-cat $(pwd)/builder/packages/gcc/14.2.0/version.desc
-echo "阿迪斯发顺丰3"
+
 # build
 sudo mkdir -p /opt
 sudo chmod 0777 /opt
@@ -78,7 +66,18 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
-
+echo "当期路径: $(pwd)"
+cat $(pwd)/builder/packages/gcc/14.2.0/version.desc 
+# 设置 gcc 版本描述文件
+GCC_REPO="http://gcc.gnu.org/git/gcc.git"
+GCC_BRANCH="master"
+GCC_DESC_FILE=$(pwd)/builder/packages/gcc/14.2.0/version.desc 
+> "$GCC_DESC_FILE"
+echo "repo = \"$GCC_REPO\"" >> "$GCC_DESC_FILE"
+echo "branch = \"$GCC_BRANCH\"" >> "$GCC_DESC_FILE"
+echo "阿迪斯发顺丰2"
+cat $(pwd)/builder/packages/gcc/14.2.0/version.desc
+echo "阿迪斯发顺丰3"
 # 将 gcc 的来源设置为 git， 并取消 release 和 custom
 sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $(pwd)/.config
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
