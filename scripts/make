@@ -84,7 +84,9 @@ sed -i 's|CT_GMP_MIRRORS="https://gmplib.org/download/gmp https://gmplib.org/dow
 sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors GNU mpc)"|CT_MPC_MIRRORS="https://ftp.gnu.org/gnu/mpc $(CT_Mirrors GNU mpc)"|' $(pwd)/.config
 echo "显示"
 cat $(pwd)/.config
-echo "显示"
+echo "显示1"
+git ls-remote git://gcc.gnu.org/git/gcc.git releases/gcc-15
+echo "显示2"
 ct-ng build.$(nproc)
 popd
 
