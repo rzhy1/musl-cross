@@ -64,6 +64,13 @@ sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
+# 输出 config/versions/*.in 文件内容
+echo "==== config/versions/*.in 文件内容 ===="
+for file in builder/config/versions/*.in; do
+ echo "==== $file ===="
+ cat "$file"
+done
+echo "==== config/versions/*.in 文件内容 ===="
 pushd build
 ct-ng olddefconfig
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
