@@ -85,6 +85,10 @@ sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
 sed -i 's|CT_GCC_MIRRORS=".*"|CT_GCC_MIRRORS="https://gcc.gnu.org/git/gcc.git"|' $(pwd)/.config
 echo 'CT_GCC_DEVEL_URL="https://gcc.gnu.org/git/gcc.git"' >> $(pwd)/.config
 echo 'CT_GCC_DEVEL_BRANCH="master"' >> $(pwd)/.config
+echo 'CT_TOOLCHAIN_VCS=y' >> $(pwd)/.config
+echo 'CT_TOOLCHAIN_VCS_TYPE="git"' >> $(pwd)/.config
+
+
 
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
