@@ -79,6 +79,7 @@ pushd build
 ct-ng olddefconfig
 
 # 将 gcc 的来源设置为 git， 并取消 release 和 custom
+sed -i 's/CT_GCC_VERSION="14.2.0"/CT_GCC_VERSION="master"/' $(pwd)/.config
 sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $(pwd)/.config
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
 sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
@@ -87,7 +88,6 @@ echo 'CT_GCC_DEVEL_URL="https://gcc.gnu.org/git/gcc.git"' >> $(pwd)/.config
 echo 'CT_GCC_DEVEL_BRANCH="master"' >> $(pwd)/.config
 echo 'CT_TOOLCHAIN_VCS=y' >> $(pwd)/.config
 echo 'CT_TOOLCHAIN_VCS_TYPE="git"' >> $(pwd)/.config
-
 
 
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
@@ -100,7 +100,7 @@ echo "显示1"
 #git ls-remote https://gcc.gnu.org/git/gcc.git trunk
 #sudo find / -type f -name "version.desc"
 echo "显示2"
-ct-ng -v build
+ct-ng build.$(nproc)
 popd
 
 # 删除临时文件
