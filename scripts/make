@@ -71,7 +71,7 @@ sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
 sed -i 's|CT_GMP_MIRRORS="https://gmplib.org/download/gmp https://gmplib.org/download/gmp/archive $(CT_Mirrors GNU gmp)"|CT_GMP_MIRRORS="https://gmplib.org/download/gmp $(CT_Mirrors GNU gmp)"|' $(pwd)/.config
 sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors GNU mpc)"|CT_MPC_MIRRORS="https://ftp.gnu.org/gnu/mpc $(CT_Mirrors GNU mpc)"|' $(pwd)/.config
-ct-ng build.$(nproc)
+ct-ng -v build.$(nproc)
 popd
 
 # 删除临时文件
