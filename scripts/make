@@ -100,7 +100,7 @@ echo "显示1"
 #git ls-remote https://gcc.gnu.org/git/gcc.git trunk
 #sudo find / -type f -name "version.desc"
 echo "显示2"
-ct-ng  build.$(nproc)
+ct-ng -v build
 popd
 
 # 删除临时文件
