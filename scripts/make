@@ -65,7 +65,9 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
-
+echo "显示"
+cat $(pwd)/.config
+echo "显示结束"
 # 更新部分依赖项的版本
 sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
 sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
