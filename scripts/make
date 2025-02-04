@@ -65,24 +65,28 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 ct-ng olddefconfig
-echo "显示"
-cat $(pwd)/.config
+echo "显示原版"
+#cat $(pwd)/.config
 echo "显示结束"
 
 # 更新gmp
-sed -i 's/CT_GMP_VERSION="6.2.1"/CT_GMP_VERSION="6.3.0"/' $(pwd)/.config
-sed -i 's|CT_GMP_MIRRORS="https://gmplib.org/download/gmp https://gmplib.org/download/gmp/archive $(CT_Mirrors GNU gmp)"|CT_GMP_MIRRORS="https://gmplib.org/download/gmp $(CT_Mirrors GNU gmp)"|' $(pwd)/.config
+sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
+sed -i "s/^CT_GMP_V_6_2=y/# CT_GMP_V_6_2 is not set/" $(pwd)/.config
+sed -i '/^# CT_GMP_V_6_2 is not set/iCT_GMP_V_6_3=y' $(pwd)/.config
 
 # 更新ISL 
-sed -i 's/CT_ISL_VERSION="0.26"/CT_ISL_VERSION="0.27"/' $(pwd)/.config
-
-# 更新MPC_MIRRORS
-sed -i 's|CT_MPC_MIRRORS="https://www.multiprecision.org/downloads $(CT_Mirrors GNU mpc)"|CT_MPC_MIRRORS="https://ftp.gnu.org/gnu/mpc $(CT_Mirrors GNU mpc)"|' $(pwd)/.config
+sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
+sed -i "s/^CT_ISL_V_0_26=y/# CT_ISL_V_0_26 is not set/" $(pwd)/.config
+sed -i '/^# CT_ISL_V_0_26 is not set/iCT_ISL_V_0_27=y' $(pwd)/.config
 
 # 更新binutils
 sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
 sed -i "s/^CT_BINUTILS_V_2_43=y/# CT_BINUTILS_V_2_43 is not set/" $(pwd)/.config
 sed -i '/^# CT_BINUTILS_V_2_43 is not set/i CT_BINUTILS_V_2_44=y' $(pwd)/.config
+
+echo "显示新版"
+cat $(pwd)/.config
+echo "显示结束"
 
 ct-ng build.$(nproc)
 popd
