@@ -61,6 +61,7 @@ fi
 echo "当期路径: $(pwd)"
 cat $(pwd)/builder/packages/gcc/14.2.0/version.desc 
 # 设置 gcc 版本描述文件
+GCC_VERSION="14.2.0"
 GCC_REPO="http://gcc.gnu.org/git/gcc.git"
 GCC_BRANCH="master"
 GCC_DESC_FILE=$(pwd)/builder/packages/gcc/14.2.0/version.desc 
@@ -79,7 +80,7 @@ pushd build
 ct-ng olddefconfig
 
 # 将 gcc 的来源设置为 git， 并取消 release 和 custom
-sed -i 's/CT_GCC_VERSION="14.2.0"/CT_GCC_VERSION="master"/' $(pwd)/.config
+#sed -i 's/CT_GCC_VERSION="14.2.0"/CT_GCC_VERSION="master"/' $(pwd)/.config
 sed -i 's/CT_GCC_ARCHIVE_FORMATS=".tar.xz .tar.gz"/CT_GCC_ARCHIVE_FORMATS=""/' $(pwd)/.config
 sed -i 's/^CT_GCC_SRC_RELEASE=y/# CT_GCC_SRC_RELEASE=y/' $(pwd)/.config
 sed -i 's/# CT_GCC_SRC_DEVEL is not set/CT_GCC_SRC_DEVEL=y/' $(pwd)/.config
