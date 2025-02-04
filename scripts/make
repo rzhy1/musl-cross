@@ -86,10 +86,10 @@ sed -i '/^# CT_BINUTILS_V_2_43 is not set/i CT_BINUTILS_V_2_44=y' $(pwd)/.config
 
 # 更新mingw-w64地址
 echo "下载"
-wget -O "mingw-w64-master.tar.gz" "https://github.com/mingw-w64/mingw-w64/archive/master.tar.gz"
-echo "下载1"
-#sudo mv mingw-w64-master.tar.gz ${HOME}/src/
-#sudo find ${HOME}/src/ -name "*master.tar.gz"
+rm ${HOME}/src
+sudo mkdir -p ${HOME}/src
+sudo wget -O "${HOME}/src/mingw-w64-master.tar.gz" "https://github.com/mingw-w64/mingw-w64/archive/master.tar.gz"
+sudo find ${HOME}/src/ -name "*master.tar.gz"
 sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
 sed -i "s/^CT_MINGW_W64_ARCHIVE_FORMATS=\".*\"/CT_MINGW_W64_ARCHIVE_FORMATS=\".tar.gz\"/" $(pwd)/.config
 sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=\".*\"/CT_MINGW_W64_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
