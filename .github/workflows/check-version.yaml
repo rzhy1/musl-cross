@@ -1,4 +1,4 @@
-name: Check Versions and Create Release (Version.md only)
+name: Check Version
 
 on:
   workflow_dispatch:
@@ -40,7 +40,7 @@ jobs:
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          tag: Check Version
+          tag: Version
           name: version
           allowUpdates: true
           bodyFile: ${{ github.workspace }}/version.md
