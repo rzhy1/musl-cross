@@ -132,12 +132,15 @@ else
 fi
 
 # 获取 GCC 最新版本
-gcc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gcc/ | grep -oE 'href="gcc-([0-9.]+)/"' | sort -rV | head -n 1 | sed -r 's/href="gcc-(.+)\/"/\1/')"
+#gcc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gcc/ | grep -oE 'href="gcc-([0-9.]+)/"' | sort -rV | head -n 1 | sed -r 's/href="gcc-(.+)\/"/\1/')"
+gcc_page_content=$(retry curl -s https://gcc.gnu.org/download/)
+gcc_tag1=$(echo "$gcc_page_content" | grep -oE 'GCC ([0-9.]+)\s+Released' | head -n 1 | sed -r 's/GCC\s+([0-9.]+)\s+Released/\1/')
+gcc_latest_download_url=$(echo "$gcc_page_content" | grep -oE 'href="https://ftpmirror.gnu.org/gcc/gcc-([0-9.]+)/"' | head -n 1 | sed -r 's/href="([^"]+)"/\1/')
 if version_gt "gcc" "$gcc_tag1" "$gcc_tag"; then
   echo "- gcc有最新版：$gcc_tag1  https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "- gcc ${gcc_tag} 已是最新版 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag}/gcc-${gcc_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "- gcc ${gcc_tag} 已是最新版 $gcc_latest_download_url" | tee -a "${VERSION}"
 fi
 
 # 检查是否发现更新，如果没有，则输出所有程序都已更新的消息
