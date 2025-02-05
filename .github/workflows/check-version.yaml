@@ -16,7 +16,7 @@ on:
 
 jobs:
   check_and_release:
-    name: Check Versions and Create Release
+    name: Check Version
     runs-on: ubuntu-24.04
     steps:
       - name: Checkout code
