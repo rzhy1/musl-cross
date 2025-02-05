@@ -91,7 +91,7 @@ gcc-master() {
   sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=\".*\"/CT_GCC_ARCHIVE_DIRNAME=\"gcc-master\"/" $(pwd)/.config
   sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
 }
-gcc-master
+#gcc-master
 
 echo "显示新版"
 cat $(pwd)/.config
