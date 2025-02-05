@@ -141,5 +141,5 @@ else
 fi
 
 if [[ "$update_found" == "false" ]]; then
-  echo "所有程序都没有更新的版本" | tee -a "${VERSION}"
+  echo "----------所有程序都没有更新的版本----------" | tee -a "${VERSION}"
 fi
