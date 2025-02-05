@@ -76,7 +76,7 @@ jobs:
         uses: ncipollo/release-action@v1
         with:
           tag: mingw-w64 
-          name: mingw-w64 by musl-cross(crosstool-ng)
+          name: mingw-w64 by musl-cross(crosstool-ng)1
           allowUpdates: true
           artifacts: x86_64-w64-mingw32.tar.xz
           token: ${{ secrets.GITHUB_TOKEN }}
