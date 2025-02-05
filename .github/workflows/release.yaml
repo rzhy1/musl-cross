@@ -45,17 +45,16 @@ jobs:
         run: |
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
-      - name: Find build.log  # 添加这个步骤来查找 build.log
-        if: failure() # 只在之前的步骤失败时运行
+      - name: Find build.log  # 查找并显示 build.log
+        if: failure()
         run: |
-          echo "查找 build.log 文件..."
-          find . -name "build.log" -print
-          echo "--- build.log 文件内容 (如果找到): ---"
-          if find . -name "build.log" -print -quit | read -r log_path; then
-            cat "$log_path"
-          else
-            echo "没有找到 build.log 文件。"
-          fi
+             echo "查找 build.log 文件..."
+             find . -name "build.log" -print
+             echo "--- build.log 文件内容 (如果找到): ---"
+             find . -name "build.log" -print -exec cat {} \;  # 直接使用 find -exec cat
+             if ! find . -name "build.log" -print -quit > /dev/null 2>&1; then
+               echo "没有找到 build.log 文件 (再次确认)。"
+             fi
      
       - name: Upload package
         uses: actions/upload-artifact@v4
