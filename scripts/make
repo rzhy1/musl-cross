@@ -40,13 +40,13 @@ export PATH="/usr/lib/ccache:$PATH"
 ccache --max-size=2G
 
 # patch
-#pushd builder
-#for i in ../targets/${TARGET}/*; do
-#    if [[ $i == *.patch ]]; then
-#        patch -Np1 -i $i
-#    fi
-#done
-#popd
+pushd builder
+for i in ../targets/${TARGET}/*; do
+    if [[ $i == *.patch ]]; then
+        patch -Np1 -i $i
+    fi
+done
+popd
 
 # crosstool-ng
 echo "编译ct-ng版本"
@@ -98,7 +98,7 @@ gcc-master() {
   sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
   sed -i "s/^CT_GCC_ARCHIVE_FILENAME=\".*\"/CT_GCC_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
   sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=\".*\"/CT_GCC_ARCHIVE_DIRNAME=\"gcc-master\"/" $(pwd)/.config
-  sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
+  #sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
 }
 #gcc-master
 
