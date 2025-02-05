@@ -41,6 +41,7 @@ ccache --max-size=2G
 
 # patch
 pushd builder
+echo "Matching files: targets/${TARGET}/*.patch"
 for i in targets/${TARGET}/*.patch; do
     patch -Np1 -i "$i"
 done
