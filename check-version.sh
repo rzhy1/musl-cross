@@ -30,9 +30,10 @@ retry() {
 }
 
 version_gt() {
-  local v1="$1"
-  local v2="$2"
-  echo "正在比较版本：$v1 和 $v2"
+  local program_name="$1"  # 接收程序名作为第一个参数
+  local v1="$2"
+  local v2="$3"
+  echo "正在比较版本 $program_name: $v1 和 $v2" # 修改 echo 语句
   if [[ $v1 == $v2 ]]; then
     return 1 # Not greater
   fi
@@ -66,7 +67,7 @@ version_gt() {
 # 获取 zlib 最新版本
 zlib_tag1=$(retry curl -s https://api.github.com/repos/madler/zlib/releases/latest | jq -r '.tag_name' | sed 's/^v//')
 zlib_latest_url=$(retry curl -s "https://api.github.com/repos/madler/zlib/releases/latest" | jq -r '.assets[] | select(.name | test("\\.tar\\.gz$")) | .browser_download_url' | head -n 1)
-if version_gt "$zlib_tag1" "$zlib_tag"; then
+if version_gt "zlib" "$zlib_tag1" "$zlib_tag"; then  # 传递 "zlib" 作为程序名
   echo "zlib有最新版：$zlib_tag1 最新地址是：$zlib_latest_url"
   echo "- zlib有最新版：${zlib_tag1} 最新地址是：${zlib_latest_url}" >>"${VERSION}"
 fi
@@ -74,14 +75,14 @@ fi
 # 获取 zstd 最新版本
 zstd_tag1=$(retry curl -s https://api.github.com/repos/facebook/zstd/releases/latest | jq -r '.tag_name' | sed 's/^v//')
 zstd_latest_url=$(retry curl -s "https://api.github.com/repos/facebook/zstd/releases/latest" | jq -r '.assets[] | select(.name | test("\\.tar\\.gz$")) | .browser_download_url' | head -n 1)
-if version_gt "$zstd_tag1" "$zstd_tag"; then
+if version_gt "zstd" "$zstd_tag1" "$zstd_tag"; then # 传递 "zstd" 作为程序名
   echo "zstd有最新版：$zstd_tag1 最新地址是：$zstd_latest_url"
   echo "- zstd有最新版：${zstd_tag1} 最新地址是：${zstd_latest_url}" >>"${VERSION}"
 fi
 
 # 获取 gmp 最新版本
 gmp_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gmp/ | grep -oE 'href="gmp-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="gmp-(.+)\.tar\.(xz|gz)"/\1/')"
-if version_gt "$gmp_tag1" "$gmp_tag"; then
+if version_gt "gmp" "$gmp_tag1" "$gmp_tag"; then # 传递 "gmp" 作为程序名
   echo "gmp有最新版：$gmp_tag1 ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz"
   echo "- gmp有最新版：${gmp_tag1} ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz" >>"${VERSION}"
 fi
@@ -89,7 +90,7 @@ fi
 # 获取 MPFR 最新版本
 mpfr_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpfr/ | grep -oE 'href="mpfr-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="mpfr-(.+)\.tar\.(xz|gz)"/\1/')"
 
-if version_gt "$mpfr_tag1" "$mpfr_tag"; then
+if version_gt "mpfr" "$mpfr_tag1" "$mpfr_tag"; then # 传递 "mpfr" 作为程序名
   echo "MPFR 最新版本是 $mpfr_tag1，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz"
   echo "- MPFR 最新版本是 ${mpfr_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz" >>"${VERSION}"
 fi
@@ -97,7 +98,7 @@ fi
 # 获取 MPC 最新版本
 mpc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpc/ | grep -oE 'href="mpc-([0-9.]+)\.tar\.(gz|xz)"' | sort -rV | head -n 1 | sed -r 's/href="mpc-(.+)\.tar\.(gz|xz)"/\1/')"
 
-if version_gt "$mpc_tag1" "$mpc_tag"; then
+if version_gt "mpc" "$mpc_tag1" "$mpc_tag"; then # 传递 "mpc" 作为程序名
   echo "MPC 最新版本是 $mpc_tag1，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz"
   echo "- MPC 最新版本是 ${mpc_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz" >>"${VERSION}"
 fi
@@ -105,7 +106,7 @@ fi
 # 获取 Binutils 最新版本
 binutils_tag1="$(retry curl -s https://ftp.gnu.org/gnu/binutils/ | grep -oE 'href="binutils-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="binutils-(.+)\.tar\.(xz|gz)"/\1/')"
 
-if version_gt "$binutils_tag1" "$binutils_tag"; then
+if version_gt "binutils" "$binutils_tag1" "$binutils_tag"; then # 传递 "binutils" 作为程序名
   echo "Binutils 最新版本是 $binutils_tag1，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz"
   echo "- Binutils 最新版本是 ${binutils_tag1}，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz" >>"${VERSION}"
 fi
@@ -113,7 +114,7 @@ fi
 # 获取 GCC 最新版本
 gcc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gcc/ | grep -oE 'href="gcc-([0-9.]+)/"' | sort -rV | head -n 1 | sed -r 's/href="gcc-(.+)\/"/\1/')"
 
-if version_gt "$gcc_tag1" "$gcc_tag"; then
+if version_gt "gcc" "$gcc_tag1" "$gcc_tag"; then # 传递 "gcc" 作为程序名
   echo "GCC 最新版本是 $gcc_tag1，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz"
   echo "- GCC 最新版本是 ${gcc_tag1}，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" >>"${VERSION}"
 fi
