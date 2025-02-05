@@ -26,7 +26,11 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true
-     
+          
+      - name: check version
+        run: |
+          check-version.sh
+          
       - name: Cache crosstool-NG tarballs
         uses: actions/cache@v4
         with:
@@ -45,6 +49,7 @@ jobs:
         run: |
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
+          
       - name: Find build.log  # 查找并显示 build.log
         if: failure()
         run: |
