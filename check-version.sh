@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -x
 
 SELF_DIR="$(dirname "$(realpath "${0}")")"
 VERSION="${SELF_DIR}/version.md"
