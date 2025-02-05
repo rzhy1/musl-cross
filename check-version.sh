@@ -34,7 +34,7 @@ version_gt() {
   local program_name="$1"
   local v1="$2"
   local v2="$3"
-  #echo "正在比较版本 $program_name: $v1 和 $v2"
+  echo "正在比较版本 $program_name: $v1 和 $v2"
   if [[ $v1 == $v2 ]]; then
     return 1 # Not greater
   fi
