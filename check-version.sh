@@ -6,6 +6,7 @@ VERSION="${SELF_DIR}/version.md"
 zlib_tag="1.3.1"
 zstd_tag="1.5.6"
 gmp_tag="6.3.0"
+isl_tag="0.27"
 mpfr_tag="4.2.1"
 mpc_tag="1.3.1"
 binutils_tag="2.44"
@@ -97,6 +98,16 @@ else
   echo "gmp当前版本 ${gmp_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag}.tar.xz" >>"${VERSION}"
 fi
 
+# 获取 isl 最新版本
+isl_tag1="$(retry curl -s https://libisl.sourceforge.io/ | grep -oE 'href="isl-([0-9.]+)\.tar\.xz"' | sort -rV | head -n 1 | sed -r 's/href="isl-(.+)\.tar\.xz"/\1/')
+if version_gt "isl" "$isl_tag1" "$isl_tag"; then
+  echo "isl有最新版：$isl_tag1 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz"
+  echo "- isl有最新版：${isl_tag1} 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz" >>"${VERSION}"
+  update_found=true
+else
+  echo "isl当前版本 ${isl_tag} 已经是最新版本，下载地址是 https://libisl.sourceforge.io/isl-${isl_tag}.tar.xz" >>"${VERSION}"
+fi
+
 # 获取 MPFR 最新版本
 mpfr_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpfr/ | grep -oE 'href="mpfr-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="mpfr-(.+)\.tar\.(xz|gz)"/\1/')"
 
@@ -140,6 +151,7 @@ if version_gt "gcc" "$gcc_tag1" "$gcc_tag"; then
 else
   echo "GCC 当前版本 ${gcc_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag}/gcc-${gcc_tag}.tar.xz" >>"${VERSION}"
 fi
+
 
 # 检查是否发现更新，如果没有，则输出所有程序都已更新的消息
 if [[ "$update_found" == "false" ]]; then
