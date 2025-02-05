@@ -1,4 +1,4 @@
-#!/bin/bash -x
+#!/bin/bash
 
 SELF_DIR="$(dirname "$(realpath "${0}")")"
 VERSION="${SELF_DIR}/version.md"
@@ -32,6 +32,7 @@ retry() {
 version_gt() {
   local v1="$1"
   local v2="$2"
+  echo "正在比较版本：$v1 和 $v2"
   if [[ $v1 == $v2 ]]; then
     return 1 # Not greater
   fi
@@ -60,6 +61,7 @@ version_gt() {
   done
   return 1 # v2 is greater or equal if loop completes
 }
+
 
 # 获取 zlib 最新版本
 zlib_tag1=$(retry curl -s https://api.github.com/repos/madler/zlib/releases/latest | jq -r '.tag_name' | sed 's/^v//')
