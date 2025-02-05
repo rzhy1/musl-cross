@@ -41,8 +41,10 @@ ccache --max-size=2G
 
 # patch
 pushd builder
-ls -l targets/x86_64-w64-mingw32/*.patch
 shopt nullglob
+ls -l targets/x86_64-w64-mingw32/*.patch
+
+shopt -u nullglob
 for i in targets/${TARGET}/*.patch; do
     patch -Np1 -i "$i"
 done
