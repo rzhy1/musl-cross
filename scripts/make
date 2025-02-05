@@ -89,7 +89,7 @@ gcc-master() {
   sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
   sed -i "s/^CT_GCC_ARCHIVE_FILENAME=\".*\"/CT_GCC_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
   sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=\".*\"/CT_GCC_ARCHIVE_DIRNAME=\"gcc-master\"/" $(pwd)/.config
-  #sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
+  sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
 }
 gcc-master
 
