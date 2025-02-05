@@ -85,6 +85,7 @@ jobs:
           name: mingw-w64 by musl-cross(crosstool-ng)
           allowUpdates: true
           artifacts: x86_64-w64-mingw32.tar.xz
+          bodyFile: ${{ github.workspace }}/version.md
           token: ${{ secrets.GITHUB_TOKEN }}
           
       - name: Show ccache stats
