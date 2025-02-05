@@ -28,8 +28,7 @@ jobs:
           submodules: true
           
       - name: check version
-        run: |
-          .check-version.sh
+        run: bash .check-version.sh
           
       - name: Cache crosstool-NG tarballs
         uses: actions/cache@v4
