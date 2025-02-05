@@ -39,17 +39,6 @@ export CCACHE_DIR="$HOME/.ccache"
 export PATH="/usr/lib/ccache:$PATH"
 ccache --max-size=2G
 
-# patch
-pushd builder
-shopt nullglob
-ls -l targets/x86_64-w64-mingw32/*.patch
-
-shopt -u nullglob
-for i in targets/${TARGET}/*.patch; do
-    patch -Np1 -i "$i"
-done
-popd
-
 # crosstool-ng
 echo "编译ct-ng版本"
 if [ ! -e /usr/bin/ct-ng ]; then
