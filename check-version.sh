@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SELF_DIR="$(dirname "$(realpath "${0}")")"
+VERSION="${SELF_DIR}/version.md"
+
 zlib_tag="1.3.1"
 zstd_tag="1.5.6"
 gmp_tag="6.3.0"
@@ -61,27 +64,24 @@ version_gt() {
 # 获取 zlib 最新版本
 zlib_tag1=$(retry curl -s https://api.github.com/repos/madler/zlib/releases/latest | jq -r '.tag_name' | sed 's/^v//')
 zlib_latest_url=$(retry curl -s "https://api.github.com/repos/madler/zlib/releases/latest" | jq -r '.assets[] | select(.name | test("\\.tar\\.gz$")) | .browser_download_url' | head -n 1)
-
 if version_gt "$zlib_tag1" "$zlib_tag"; then
   echo "zlib有最新版：$zlib_tag1 最新地址是：$zlib_latest_url"
-  echo "- zlib有最新版：${zlib_tag1} 最新地址是：${zlib_latest_url}" >> version.md
+  echo "- zlib有最新版：${zlib_tag1} 最新地址是：${zlib_latest_url}" >>"${VERSION}"
 fi
 
 # 获取 zstd 最新版本
 zstd_tag1=$(retry curl -s https://api.github.com/repos/facebook/zstd/releases/latest | jq -r '.tag_name' | sed 's/^v//')
 zstd_latest_url=$(retry curl -s "https://api.github.com/repos/facebook/zstd/releases/latest" | jq -r '.assets[] | select(.name | test("\\.tar\\.gz$")) | .browser_download_url' | head -n 1)
-
 if version_gt "$zstd_tag1" "$zstd_tag"; then
   echo "zstd有最新版：$zstd_tag1 最新地址是：$zstd_latest_url"
-  echo "- zstd有最新版：${zstd_tag1} 最新地址是：${zstd_latest_url}" >> version.md
+  echo "- zstd有最新版：${zstd_tag1} 最新地址是：${zstd_latest_url}" >>"${VERSION}"
 fi
 
 # 获取 gmp 最新版本
 gmp_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gmp/ | grep -oE 'href="gmp-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="gmp-(.+)\.tar\.(xz|gz)"/\1/')"
-
 if version_gt "$gmp_tag1" "$gmp_tag"; then
   echo "gmp有最新版：$gmp_tag1 ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz"
-  echo "- gmp有最新版：${gmp_tag1} ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz" >> version.md
+  echo "- gmp有最新版：${gmp_tag1} ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz" >>"${VERSION}"
 fi
 
 # 获取 MPFR 最新版本
@@ -89,7 +89,7 @@ mpfr_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpfr/ | grep -oE 'href="mpfr-
 
 if version_gt "$mpfr_tag1" "$mpfr_tag"; then
   echo "MPFR 最新版本是 $mpfr_tag1，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz"
-  echo "- MPFR 最新版本是 ${mpfr_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz" >> version.md
+  echo "- MPFR 最新版本是 ${mpfr_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz" >>"${VERSION}"
 fi
 
 # 获取 MPC 最新版本
@@ -97,7 +97,7 @@ mpc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpc/ | grep -oE 'href="mpc-([0
 
 if version_gt "$mpc_tag1" "$mpc_tag"; then
   echo "MPC 最新版本是 $mpc_tag1，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz"
-  echo "- MPC 最新版本是 ${mpc_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz" >> version.md
+  echo "- MPC 最新版本是 ${mpc_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz" >>"${VERSION}"
 fi
 
 # 获取 Binutils 最新版本
@@ -105,7 +105,7 @@ binutils_tag1="$(retry curl -s https://ftp.gnu.org/gnu/binutils/ | grep -oE 'hre
 
 if version_gt "$binutils_tag1" "$binutils_tag"; then
   echo "Binutils 最新版本是 $binutils_tag1，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz"
-  echo "- Binutils 最新版本是 ${binutils_tag1}，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz" >> version.md
+  echo "- Binutils 最新版本是 ${binutils_tag1}，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz" >>"${VERSION}"
 fi
 
 # 获取 GCC 最新版本
@@ -113,5 +113,5 @@ gcc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gcc/ | grep -oE 'href="gcc-([0
 
 if version_gt "$gcc_tag1" "$gcc_tag"; then
   echo "GCC 最新版本是 $gcc_tag1，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz"
-  echo "- GCC 最新版本是 ${gcc_tag1}，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" >> version.md
+  echo "- GCC 最新版本是 ${gcc_tag1}，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" >>"${VERSION}"
 fi
