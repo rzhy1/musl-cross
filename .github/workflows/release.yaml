@@ -25,13 +25,12 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          submodules: true
-          
-      - name: 列出工作区文件 (调试) 
-        run: ls -al    
+          submodules: true   
 
       - name: check version
-        run: bash .check-version.sh
+        run: |
+          chmod +x .check-version.sh
+          .check-version.sh
           
       - name: Cache crosstool-NG tarballs
         uses: actions/cache@v4
