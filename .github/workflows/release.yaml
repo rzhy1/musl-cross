@@ -27,6 +27,9 @@ jobs:
           fetch-depth: 1
           submodules: true
           
+      - name: 列出工作区文件 (调试) 
+        run: ls -al    
+
       - name: check version
         run: bash .check-version.sh
           
