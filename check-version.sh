@@ -34,7 +34,7 @@ version_gt() {
   local program_name="$1"
   local v1="$2"
   local v2="$3"
-  echo "正在比较版本 $program_name: $v1 和 $v2"
+  #echo "正在比较版本 $program_name: $v1 和 $v2"
   if [[ $v1 == $v2 ]]; then
     return 1 # Not greater
   fi
@@ -73,7 +73,7 @@ if version_gt "zlib" "$zlib_tag1" "$zlib_tag"; then
   echo "zlib有最新版：$zlib_tag1 最新地址是：$zlib_latest_url\n- zlib有最新版：${zlib_tag1} 最新地址是：${zlib_latest_url}" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "zlib当前版本 ${zlib_tag} 已经是最新版本，下载地址是 https://github.com/madler/zlib/releases/download/v${zlib_tag}/zlib-${zlib_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "zlib ${zlib_tag} 已经是最新版本，下载地址是 https://github.com/madler/zlib/releases/download/v${zlib_tag}/zlib-${zlib_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
 # 获取 zstd 最新版本
@@ -83,7 +83,7 @@ if version_gt "zstd" "$zstd_tag1" "$zstd_tag"; then
   echo "zstd有最新版：$zstd_tag1 最新地址是：$zstd_latest_url\n- zstd有最新版：${zstd_tag1} 最新地址是：${zstd_latest_url}" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "zstd当前版本 ${zstd_tag} 已经是最新版本，下载地址是 https://github.com/facebook/zstd/releases/download/v${zstd_tag}/zstd-${zstd_tag}.tar.gz" | tee -a "${VERSION}"
+  echo "zstd ${zstd_tag} 已经是最新版本，下载地址是 https://github.com/facebook/zstd/releases/download/v${zstd_tag}/zstd-${zstd_tag}.tar.gz" | tee -a "${VERSION}"
 fi
 
 # 获取 gmp 最新版本
@@ -92,7 +92,7 @@ if version_gt "gmp" "$gmp_tag1" "$gmp_tag"; then
   echo "gmp有最新版：$gmp_tag1 ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz\n- gmp有最新版：${gmp_tag1} ，下载地址是https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "gmp当前版本 ${gmp_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "gmp ${gmp_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gmp/gmp-${gmp_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
 # 获取 isl 最新版本
@@ -101,7 +101,7 @@ if version_gt "isl" "$isl_tag1" "$isl_tag"; then
   echo "isl有最新版：$isl_tag1 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz\n- isl有最新版：${isl_tag1} 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "isl当前版本 ${isl_tag} 已经是最新版本，下载地址是 https://libisl.sourceforge.io/isl-${isl_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "isl ${isl_tag} 已经是最新版本，下载地址是 https://libisl.sourceforge.io/isl-${isl_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
 # 获取 MPFR 最新版本
@@ -110,7 +110,7 @@ if version_gt "mpfr" "$mpfr_tag1" "$mpfr_tag"; then
   echo "MPFR 最新版本是 $mpfr_tag1，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz\n- MPFR 最新版本是 ${mpfr_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "MPFR 当前版本 ${mpfr_tag} 已经是最新版本，下载地址是 https://www.mpfr.org/mpfr-${mpfr_tag}/mpfr-${mpfr_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "MPFR ${mpfr_tag} 已经是最新版本，下载地址是 https://www.mpfr.org/mpfr-${mpfr_tag}/mpfr-${mpfr_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
 # 获取 MPC 最新版本
@@ -119,7 +119,7 @@ if version_gt "mpc" "$mpc_tag1" "$mpc_tag"; then
   echo "MPC 最新版本是 $mpc_tag1，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz\n- MPC 最新版本是 ${mpc_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "MPC 当前版本 ${mpc_tag} 已经是最新版本，下载地址是 https://www.multiprecision.org/downloads/mpc-${mpc_tag}.tar.gz" | tee -a "${VERSION}"
+  echo "MPC ${mpc_tag} 已经是最新版本，下载地址是 https://www.multiprecision.org/downloads/mpc-${mpc_tag}.tar.gz" | tee -a "${VERSION}"
 fi
 
 # 获取 Binutils 最新版本
@@ -128,7 +128,7 @@ if version_gt "binutils" "$binutils_tag1" "$binutils_tag"; then
   echo "Binutils 最新版本是 $binutils_tag1，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz\n- Binutils 最新版本是 ${binutils_tag1}，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "Binutils 当前版本 ${binutils_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "Binutils ${binutils_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
 # 获取 GCC 最新版本
@@ -137,11 +137,9 @@ if version_gt "gcc" "$gcc_tag1" "$gcc_tag"; then
   echo "GCC 最新版本是 $gcc_tag1，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz\n- GCC 最新版本是 ${gcc_tag1}，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" | tee -a "${VERSION}"
   update_found=true
 else
-  echo "GCC 当前版本 ${gcc_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag}/gcc-${gcc_tag}.tar.xz" | tee -a "${VERSION}"
+  echo "GCC ${gcc_tag} 已经是最新版本，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag}/gcc-${gcc_tag}.tar.xz" | tee -a "${VERSION}"
 fi
 
-
-# 检查是否发现更新，如果没有，则输出所有程序都已更新的消息
 if [[ "$update_found" == "false" ]]; then
-  echo "所有程序都没有更新的版本\n- 所有程序都没有更新的版本" | tee -a "${VERSION}"
+  echo "所有程序都没有更新的版本" | tee -a "${VERSION}"
 fi
