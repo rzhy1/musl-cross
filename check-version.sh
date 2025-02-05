@@ -99,7 +99,7 @@ else
 fi
 
 # 获取 isl 最新版本
-isl_tag1="$(retry curl -s https://libisl.sourceforge.io/ | grep -oE 'href="isl-([0-9.]+)\.tar\.xz"' | sort -rV | head -n 1 | sed -r 's/href="isl-(.+)\.tar\.xz"/\1/')
+isl_tag1="$(retry curl -s https://libisl.sourceforge.io/ | grep -oE 'href="isl-([0-9.]+)\.tar\.xz"' | sort -rV | head -n 1 | sed -r 's/href="isl-(.+)\.tar\.xz"/\1/')"
 if version_gt "isl" "$isl_tag1" "$isl_tag"; then
   echo "isl有最新版：$isl_tag1 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz"
   echo "- isl有最新版：${isl_tag1} 最新地址是：https://libisl.sourceforge.io/isl-${isl_tag1}.tar.xz" >>"${VERSION}"
@@ -110,7 +110,6 @@ fi
 
 # 获取 MPFR 最新版本
 mpfr_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpfr/ | grep -oE 'href="mpfr-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="mpfr-(.+)\.tar\.(xz|gz)"/\1/')"
-
 if version_gt "mpfr" "$mpfr_tag1" "$mpfr_tag"; then
   echo "MPFR 最新版本是 $mpfr_tag1，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz"
   echo "- MPFR 最新版本是 ${mpfr_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpfr/mpfr-${mpfr_tag1}.tar.xz" >>"${VERSION}"
@@ -121,7 +120,6 @@ fi
 
 # 获取 MPC 最新版本
 mpc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/mpc/ | grep -oE 'href="mpc-([0-9.]+)\.tar\.(gz|xz)"' | sort -rV | head -n 1 | sed -r 's/href="mpc-(.+)\.tar\.(gz|xz)"/\1/')"
-
 if version_gt "mpc" "$mpc_tag1" "$mpc_tag"; then
   echo "MPC 最新版本是 $mpc_tag1，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz"
   echo "- MPC 最新版本是 ${mpc_tag1}，下载地址是 https://ftp.gnu.org/gnu/mpc/mpc-${mpc_tag1}.tar.gz" >>"${VERSION}"
@@ -132,7 +130,6 @@ fi
 
 # 获取 Binutils 最新版本
 binutils_tag1="$(retry curl -s https://ftp.gnu.org/gnu/binutils/ | grep -oE 'href="binutils-([0-9.]+)\.tar\.(xz|gz)"' | sort -rV | head -n 1 | sed -r 's/href="binutils-(.+)\.tar\.(xz|gz)"/\1/')"
-
 if version_gt "binutils" "$binutils_tag1" "$binutils_tag"; then
   echo "Binutils 最新版本是 $binutils_tag1，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz"
   echo "- Binutils 最新版本是 ${binutils_tag1}，下载地址是 https://ftp.gnu.org/gnu/binutils/binutils-${binutils_tag1}.tar.xz" >>"${VERSION}"
@@ -143,7 +140,6 @@ fi
 
 # 获取 GCC 最新版本
 gcc_tag1="$(retry curl -s https://ftp.gnu.org/gnu/gcc/ | grep -oE 'href="gcc-([0-9.]+)/"' | sort -rV | head -n 1 | sed -r 's/href="gcc-(.+)\/"/\1/')"
-
 if version_gt "gcc" "$gcc_tag1" "$gcc_tag"; then
   echo "GCC 最新版本是 $gcc_tag1，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz"
   echo "- GCC 最新版本是 ${gcc_tag1}，下载地址是 https://ftp.gnu.org/gnu/gcc/gcc-${gcc_tag1}/gcc-${gcc_tag1}.tar.xz" >>"${VERSION}"
