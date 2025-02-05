@@ -1,0 +1,49 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
+  release:
+    types:
+      - released
+  schedule:
+    - cron: "0 0 * * *"
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          submodules: true   
+
+      - name: check version
+        run: |
+          chmod +x $GITHUB_WORKSPACE/check-version.sh
+          $GITHUB_WORKSPACE/check-version.sh
+      
+          
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: mingw-w6411111
+          name: mingw-w64 by musl-cross(crosstool-ng)
+          allowUpdates: true
+          artifacts: x86_64-w64-mingw32.tar.xz
+          bodyFile: ${{ github.workspace }}/version.md
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Show ccache stats
+        run: ccache -s -v
+
+      
