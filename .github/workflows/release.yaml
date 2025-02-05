@@ -29,8 +29,8 @@ jobs:
 
       - name: check version
         run: |
-          chmod +x .check-version.sh
-          .check-version.sh
+          chmod +x $GITHUB_WORKSPACE/check-version.sh
+          $GITHUB_WORKSPACE/check-version.sh
           
       - name: Cache crosstool-NG tarballs
         uses: actions/cache@v4
