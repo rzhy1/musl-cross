@@ -1,4 +1,4 @@
-name: Release
+name: Check Versions and Create Release (Version.md only)
 
 on:
   workflow_dispatch:
@@ -15,35 +15,33 @@ on:
     - cron: "0 0 * * *"
 
 jobs:
-  build:
-    name: Build
+  check_and_release:
+    name: Check Versions and Create Release
     runs-on: ubuntu-24.04
-    strategy:
-      fail-fast: true
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          submodules: true   
+          submodules: true
 
-      - name: check version
+      - name: Check Versions Script
         run: |
           chmod +x $GITHUB_WORKSPACE/check-version.sh
           $GITHUB_WORKSPACE/check-version.sh
-      
-          
+
+      - name: Upload version.md Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: version-md
+          path: ${{ github.workspace }}/version.md
+          retention-days: 1
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
-          tag: mingw-w6411111
-          name: mingw-w64 by musl-cross(crosstool-ng)
+          tag: Check Version
+          name: version
           allowUpdates: true
-          artifacts: x86_64-w64-mingw32.tar.xz
           bodyFile: ${{ github.workspace }}/version.md
           token: ${{ secrets.GITHUB_TOKEN }}
-          
-      - name: Show ccache stats
-        run: ccache -s -v
-
-      
