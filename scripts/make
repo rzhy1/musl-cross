@@ -43,7 +43,8 @@ ccache --max-size=2G
 echo "编译ct-ng版本"
 if [ ! -e /usr/bin/ct-ng ]; then
     pushd builder
-    sed -i 's/## select GDB_REQUIRE_older_than_16 if DEBUG_GDB/## select GDB_REQUIRE_older_than_17 if DEBUG_GDB/' crosstool-ng/config/arch/nios2.in
+    find / -name "arch/nios2.in"
+    sed -i 's/## select GDB_REQUIRE_older_than_16 if DEBUG_GDB/## select GDB_REQUIRE_older_than_17 if DEBUG_GDB/' config/arch/nios2.in
     grep '## select GDB_REQUIRE_older_than_' config/arch/nios2.in
     ./bootstrap
     ./configure --prefix=/usr
