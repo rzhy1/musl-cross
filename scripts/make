@@ -61,9 +61,9 @@ echo "显示原版"
 echo "显示结束"
 
 # 更新gmp
-sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
-sed -i "s/^CT_GMP_V_6_2=y/# CT_GMP_V_6_2 is not set/" $(pwd)/.config
-sed -i '/^# CT_GMP_V_6_2 is not set/iCT_GMP_V_6_3=y' $(pwd)/.config
+#sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
+#sed -i "s/^CT_GMP_V_6_2=y/# CT_GMP_V_6_2 is not set/" $(pwd)/.config
+#sed -i '/^# CT_GMP_V_6_2 is not set/iCT_GMP_V_6_3=y' $(pwd)/.config
 
 # 更新ISL 
 sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
