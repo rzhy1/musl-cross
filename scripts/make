@@ -44,8 +44,14 @@ echo "编译ct-ng版本"
 if [ ! -e /usr/bin/ct-ng ]; then
     pushd builder
     #sudo find / -name "nios2.in"
-    perl -pi -e 's/## select GDB_REQUIRE_older_than_16 if DEBUG_GDB/## select GDB_REQUIRE_older_than_17 if DEBUG_GDB/' \
-    /home/runner/work/musl-cross/musl-cross/builder/config/arch/nios2.in
+    awk '{if($0 ~ /## select GDB_REQUIRE_older_than_16 if DEBUG_GDB/) 
+         print "## select GDB_REQUIRE_older_than_17 if DEBUG_GDB";
+     else 
+         print $0}' \
+    /home/runner/work/musl-cross/musl-cross/builder/config/arch/nios2.in > /tmp/nios2.in
+
+    mv /tmp/nios2.in /home/runner/work/musl-cross/musl-cross/builder/config/arch/nios2.in
+
 
     cat /home/runner/work/musl-cross/musl-cross/builder/config/arch/nios2.in
     ./bootstrap
