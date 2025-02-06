@@ -49,6 +49,7 @@ if [ ! -e /usr/bin/ct-ng ]; then
     sudo make install
     popd
 fi
+echo "显示原版2"
 # build
 sudo mkdir -p /opt
 sudo chmod 0777 /opt
