@@ -43,25 +43,25 @@ ccache --max-size=2G
 echo "编译ct-ng版本"
 if [ ! -e /usr/bin/ct-ng ]; then
     pushd builder
+    sed -i 's/## select GDB_REQUIRE_older_than_16 if DEBUG_GDB/## select GDB_REQUIRE_older_than_17 if DEBUG_GDB/' crosstool-ng/config/arch/nios2.in
+    grep '## select GDB_REQUIRE_older_than_' config/arch/nios2.in
     ./bootstrap
     ./configure --prefix=/usr
     make -j`nproc`
     sudo make install
     popd
 fi
-echo "显示原版2"
+
 # build
 sudo mkdir -p /opt
 sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
-echo "显示原版1"
-cat $(pwd)/.config
-echo "显示结束1"
 ct-ng olddefconfig
+
 echo "显示原版"
-cat $(pwd)/.config
+#cat $(pwd)/.config
 echo "显示结束"
 
 # 更新gmp
