@@ -55,6 +55,9 @@ sudo chmod 0777 /opt
 mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
+echo "显示原版1"
+cat $(pwd)/.config
+echo "显示结束1"
 ct-ng olddefconfig
 echo "显示原版"
 cat $(pwd)/.config
