@@ -59,7 +59,7 @@ pushd build
 ct-ng olddefconfig
 
 echo "显示原版"
-#cat $(pwd)/.config
+cat $(pwd)/.config
 echo "显示结束"
 
 # 更新gmp
