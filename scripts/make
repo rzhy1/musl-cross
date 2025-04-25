@@ -74,7 +74,6 @@ sed -i '/^# CT_ISL_V_0_26 is not set/iCT_ISL_V_0_27=y' $(pwd)/.config
 
 # 更新MPFR 
 sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
-sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
 
 # 更新binutils
 sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
@@ -88,9 +87,10 @@ mingw-w64-master() {
   sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=\".*\"/CT_MINGW_W64_ARCHIVE_DIRNAME=\"mingw-w64-master\"/" $(pwd)/.config
   sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=\".*\"/CT_MINGW_W64_SIGNATURE_FORMAT=\"\"/" $(pwd)/.config
 }
-#mingw-w64-master
+mingw-w64-master
 
 # gcc-master 最新版
+sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
 gcc-master() {
   sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
   sed -i "s/^CT_GCC_ARCHIVE_FILENAME=\".*\"/CT_GCC_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
