@@ -100,7 +100,7 @@ gcc-master() {
 # gcc-master
 
 echo "显示新版"
-#cat $(pwd)/.config
+cat $(pwd)/.config
 echo "显示结束"
 
 ct-ng build.$(nproc)
