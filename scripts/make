@@ -74,6 +74,7 @@ sed -i '/^# CT_ISL_V_0_26 is not set/iCT_ISL_V_0_27=y' $(pwd)/.config
 
 # 更新MPFR 
 sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
+sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
 
 # 更新binutils
 sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
