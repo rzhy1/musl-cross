@@ -6,7 +6,7 @@ This is a simple, lightweight project for making cross-compilation toolchain wit
 
 | Target                         | Kernel  | Binutils | GCC    | Libc   |
 |--------------------------------|---------|----------|--------|--------|
-| x86_64-w64-mingw32             |         | 2.44     | 14.2.0 | 12.0.0 |
+| x86_64-w64-mingw32             |         | 2.44     | 15.1.0 | 12.0.0 |
 
 ## How to use
 
