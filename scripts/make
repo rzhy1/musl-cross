@@ -61,6 +61,53 @@ mkdir -p build
 cp targets/${TARGET}/config build/.config
 pushd build
 /opt/ct-ng/bin/ct-ng olddefconfig
+
+echo "显示原版"
+cat $(pwd)/.config
+echo "显示结束"
+
+# 更新gmp
+#sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
+#sed -i "s/^CT_GMP_V_6_2=y/# CT_GMP_V_6_2 is not set/" $(pwd)/.config
+#sed -i '/^# CT_GMP_V_6_2 is not set/iCT_GMP_V_6_3=y' $(pwd)/.config
+
+# 更新ISL 
+sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
+sed -i "s/^CT_ISL_V_0_26=y/# CT_ISL_V_0_26 is not set/" $(pwd)/.config
+sed -i '/^# CT_ISL_V_0_26 is not set/iCT_ISL_V_0_27=y' $(pwd)/.config
+
+# 更新MPFR 
+sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
+
+# 更新binutils
+#sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
+#sed -i "s/^CT_BINUTILS_V_2_43=y/# CT_BINUTILS_V_2_43 is not set/" $(pwd)/.config
+#sed -i '/^# CT_BINUTILS_V_2_43 is not set/i CT_BINUTILS_V_2_44=y' $(pwd)/.config
+
+# mingw-w64-master 最新版
+mingw-w64-master() {
+  sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=\".*\"/CT_MINGW_W64_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=\".*\"/CT_MINGW_W64_ARCHIVE_DIRNAME=\"mingw-w64-master\"/" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=\".*\"/CT_MINGW_W64_SIGNATURE_FORMAT=\"\"/" $(pwd)/.config
+}
+#mingw-w64-master
+
+# gcc-master 最新版
+#sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
+gcc-master() {
+  sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
+  sed -i "s/^CT_GCC_ARCHIVE_FILENAME=\".*\"/CT_GCC_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
+  sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=\".*\"/CT_GCC_ARCHIVE_DIRNAME=\"gcc-master\"/" $(pwd)/.config
+  sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
+}
+# gcc-master
+
+echo "显示新版"
+cat $(pwd)/.config
+echo "显示结束"
+
+
 /opt/ct-ng/bin/ct-ng build
 popd
 
