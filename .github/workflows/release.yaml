@@ -2,96 +2,85 @@ name: Release
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - "*"
+  pull_request:
+    branches:
+      - "*"
   release:
     types:
-      - published
+      - released
+  schedule:
+    - cron: "0 0 * * *"
 
 jobs:
   build:
     name: Build
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     strategy:
       fail-fast: true
-      matrix:
-        target:
-          - aarch64-unknown-linux-musl
-          - arm-unknown-linux-musleabi
-          - arm-unknown-linux-musleabihf
-          - armv7-unknown-linux-musleabi
-          - armv7-unknown-linux-musleabihf
-          - i586-unknown-linux-musl
-          - i686-unknown-linux-musl
-          - loongarch64-unknown-linux-musl
-          - m68k-unknown-linux-musl
-          - microblazeel-xilinx-linux-musl
-          - microblaze-xilinx-linux-musl
-          - mipsel-unknown-linux-musl
-          - mipsel-unknown-linux-muslsf
-          - mips-unknown-linux-musl
-          - mips-unknown-linux-muslsf
-          - mips64el-unknown-linux-musl
-          - mips64-unknown-linux-musl
-          - powerpc-unknown-linux-musl
-          - powerpc64-unknown-linux-musl
-          - riscv32-unknown-linux-musl
-          - riscv64-unknown-linux-musl
-          - s390x-ibm-linux-musl
-          - sh4-multilib-linux-musl
-          - x86_64-unknown-linux-musl
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
-          submodules: true
+          submodules: true   
+          
+      - name: Cache crosstool-NG tarballs and ccache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.ccache
+            ./builder
+            ./targets
+            ./src
+          key: ${{ runner.os }}-ct-ng-config-${{ hashFiles('builder/.config', 'targets/*/config') }}
+          restore-keys: |
+            ${{ runner.os }}-ct-ng-config-
+
       - name: Build
         run: |
           sudo rm -rf /opt/*
-          ./scripts/make ${{ matrix.target }}
+          ./scripts/make x86_64-w64-mingw32
+          
+      - name: Find build.log  # 查找并显示 build.log
+        if: failure()
+        run: |
+             echo "查找 build.log 文件..."
+             find . -name "build.log" -print
+             echo "--- build.log 文件内容 (如果找到): ---"
+             find . -name "build.log" -print -exec cat {} \;  # 直接使用 find -exec cat
+             if ! find . -name "build.log" -print -quit > /dev/null 2>&1; then
+               echo "没有找到 build.log 文件 (再次确认)。"
+             fi
+     
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}.tar.xz
-          path: ${{ matrix.target }}.tar.xz
+          name: x86_64-w64-mingw32.tar.xz
+          path: x86_64-w64-mingw32.tar.xz
           if-no-files-found: error
           retention-days: 1
+     
       - name: Upload checksum
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.target }}.tar.xz.sha256
-          path: ${{ matrix.target }}.tar.xz.sha256
+          name: x86_64-w64-mingw32.tar.xz.sha256
+          path: x86_64-w64-mingw32.tar.xz.sha256
           if-no-files-found: error
           retention-days: 1
+          
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: mingw-w64
+          name: mingw-w64 by musl-cross(crosstool-ng)
+          allowUpdates: true
+          artifacts: x86_64-w64-mingw32.tar.xz
+          token: ${{ secrets.GITHUB_TOKEN }}
+          
+      - name: Show ccache stats
+        run: ccache -s -v
 
-  release:
-    name: Release
-    runs-on: ubuntu-22.04
-    needs:
-      - build
-    if: github.event_name == 'release'
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: release
-          pattern: "*.tar.*"
-          merge-multiple: true
-      - name: Generate checksums
-        run: |
-          echo "| Filename | Sha256sum |" > RELEASE.md
-          echo "| -------- | --------- |" >> RELEASE.md
-          for i in release/*.sha256; do
-            echo "| $(basename $i .sha256) | $(cat $i) |" >> RELEASE.md
-          done
-      - name: Upload artifacts
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          for i in release/*.tar.xz; do
-            gh release upload ${{ github.event.release.tag_name }} $i $i.sha256
-          done
-          gh release edit ${{ github.event.release.tag_name }} -F RELEASE.md
+      
