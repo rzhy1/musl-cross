@@ -26,18 +26,6 @@ jobs:
         with:
           fetch-depth: 1
           submodules: true   
-          
-      - name: Cache crosstool-NG tarballs and ccache
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/.ccache
-            ./builder
-            ./targets
-            ./src
-          key: ${{ runner.os }}-ct-ng-config-${{ hashFiles('builder/.config', 'targets/*/config') }}
-          restore-keys: |
-            ${{ runner.os }}-ct-ng-config-
 
       - name: Build
         run: |
