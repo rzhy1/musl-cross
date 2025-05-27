@@ -68,13 +68,9 @@ echo "显示结束"
 
 # 更新gmp
 #sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
-#sed -i "s/^CT_GMP_V_6_2=y/# CT_GMP_V_6_2 is not set/" $(pwd)/.config
-#sed -i '/^# CT_GMP_V_6_2 is not set/iCT_GMP_V_6_3=y' $(pwd)/.config
 
 # 更新ISL 
 sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
-#sed -i "s/^CT_ISL_V_0_26=y/# CT_ISL_V_0_26 is not set/" $(pwd)/.config
-#sed -i '/^# CT_ISL_V_0_26 is not set/iCT_ISL_V_0_27=y' $(pwd)/.config
 
 # 更新MPFR 
 sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
@@ -84,8 +80,6 @@ sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 
 # 更新binutils
 #sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
-#sed -i "s/^CT_BINUTILS_V_2_43=y/# CT_BINUTILS_V_2_43 is not set/" $(pwd)/.config
-#sed -i '/^# CT_BINUTILS_V_2_43 is not set/i CT_BINUTILS_V_2_44=y' $(pwd)/.config
 
 # mingw-w64-master 最新版
 mingw-w64-master() {
