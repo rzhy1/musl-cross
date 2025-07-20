@@ -86,16 +86,9 @@ mingw-w64-master() {
   sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=\".*\"/CT_MINGW_W64_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
   sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=\".*\"/CT_MINGW_W64_ARCHIVE_DIRNAME=\"mingw-w64-master\"/" $(pwd)/.config
   sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=\".*\"/CT_MINGW_W64_SIGNATURE_FORMAT=\"\"/" $(pwd)/.config
-  
-  # 禁用所有补丁选项
-  sed -i "s|^CT_MINGW_W64_PATCH_GLOBAL=y|# CT_MINGW_W64_PATCH_GLOBAL is not set|" $(pwd)/.config
-  sed -i "s|^CT_MINGW_W64_PATCH_ORDER=\"global\"|CT_MINGW_W64_PATCH_ORDER=\"none\"|" $(pwd)/.config
-
-  # 启用无补丁选项
-  sed -i "s|^# CT_MINGW_W64_PATCH_NONE is not set|CT_MINGW_W64_PATCH_NONE=y|" $(pwd)/.config
 }
 # 启用mingw-w64最新版
-mingw-w64-master 
+# mingw-w64-master 
 
 
 #sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
