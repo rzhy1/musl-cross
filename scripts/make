@@ -70,7 +70,7 @@ sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 # 使用最新的 mingw-w64
 use_latest_mingw_w64() {
   # 设置使用 git 仓库
-  sed -i "s|^CT_WINAPI_VERSION=.*|CT_WINAPI_VERSION=\"custom\"|" $(pwd)/.config
+  sed -i "s|^CT_WINAPI_VERSION=.*|CT_WINAPI_VERSION=\"master\"|" $(pwd)/.config
   sed -i "s|^CT_MINGW_W64_VARIANT=.*|CT_MINGW_W64_VARIANT=\"custom\"|" $(pwd)/.config
   
   # 设置仓库 URL 和分支
@@ -86,7 +86,7 @@ use_latest_mingw_w64
 # 使用最新的 GCC
 use_latest_gcc() {
   # 设置使用 git 仓库
-  sed -i "s|^CT_GCC_VERSION=.*|CT_GCC_VERSION=\"custom\"|" $(pwd)/.config
+  sed -i "s|^CT_GCC_VERSION=.*|CT_GCC_VERSION=\"master\"|" $(pwd)/.config
   sed -i "s|^CT_CC_GCC_CUSTOM|CT_CC_GCC_CUSTOM|" $(pwd)/.config
   sed -i "s|^# CT_CC_GCC_CUSTOM|CT_CC_GCC_CUSTOM|" $(pwd)/.config
   
