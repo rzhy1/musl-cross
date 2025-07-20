@@ -81,7 +81,8 @@ sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 # 更新binutils
 #sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
 
-mingw-w64-master # 启用最新版
+# 启用mingw-w64最新版
+mingw-w64-master 
 mingw-w64-master() {
   sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
   sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=\".*\"/CT_MINGW_W64_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
@@ -90,7 +91,8 @@ mingw-w64-master() {
 }
 #mingw-w64-master
 
-gcc-master # 启用最新版
+# 启用gcc最新版
+gcc-master
 #sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
 gcc-master() {
   sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
