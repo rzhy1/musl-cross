@@ -62,63 +62,47 @@ cp targets/${TARGET}/config build/.config
 pushd build
 /opt/ct-ng/bin/ct-ng olddefconfig
 
-echo "显示原版 .config"
+echo "显示原版"
 cat $(pwd)/.config
-echo "原版 .config 显示结束"
+echo "显示结束"
 
-# 更新依赖库版本（这些是可选的，保持最新通常是好的）
+# 更新gmp
+#sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
+
+# 更新ISL 
 sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
+
+# 更新MPFR 
 sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
+
+# 更新ZSTD 
 sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 
-# mingw-w64-master 最新版 (使用 Git)
-mingw-w64-master() {
-  echo "正在配置 mingw-w64 以使用 Git master 分支..."
-  # 注释掉旧的基于压缩包的设置
-  sed -i "s/^CT_MINGW_W64_MIRRORS=/# CT_MINGW_W64_MIRRORS=/" $(pwd)/.config
-  sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=/# CT_MINGW_W64_ARCHIVE_FILENAME=/" $(pwd)/.config
-  sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=/# CT_MINGW_W64_ARCHIVE_DIRNAME=/" $(pwd)/.config
-  sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=/# CT_MINGW_W64_SIGNATURE_FORMAT=/" $(pwd)/.config
-  
-  # 添加新的 Git 设置
-  {
-    echo "#"
-    echo "# mingw-w64 Git master Configuration"
-    echo "CT_MINGW_W64_VCS_TYPE=\"git\""
-    echo "CT_MINGW_W64_VCS_URL=\"https://github.com/mingw-w64/mingw-w64.git\""
-    echo "CT_MINGW_W64_VCS_REVISION=\"master\""
-  } >> $(pwd)/.config
-}
+# 更新binutils
+#sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
 
-# gcc-master 最新版 (使用 Git)
+mingw-w64-master # 启用最新版
+mingw-w64-master() {
+  sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_ARCHIVE_FILENAME=\".*\"/CT_MINGW_W64_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=\".*\"/CT_MINGW_W64_ARCHIVE_DIRNAME=\"mingw-w64-master\"/" $(pwd)/.config
+  sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=\".*\"/CT_MINGW_W64_SIGNATURE_FORMAT=\"\"/" $(pwd)/.config
+}
+#mingw-w64-master
+
+gcc-master # 启用最新版
+#sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
 gcc-master() {
-  echo "正在配置 GCC 以使用 Git master 分支..."
-  # 注释掉旧的基于压缩包的设置
-  sed -i "s/^CT_GCC_MIRRORS=/# CT_GCC_MIRRORS=/" $(pwd)/.config
-  sed -i "s/^CT_GCC_ARCHIVE_FILENAME=/# CT_GCC_ARCHIVE_FILENAME=/" $(pwd)/.config
-  sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=/# CT_GCC_ARCHIVE_DIRNAME=/" $(pwd)/.config
-  
-  # 添加新的 Git 设置
-  {
-    echo "#"
-    echo "# GCC Git master Configuration"
-    echo "CT_GCC_VCS_TYPE=\"git\""
-    echo "CT_GCC_VCS_URL=\"https://gcc.gnu.org/git/gcc.git\""
-    echo "CT_GCC_VCS_REVISION=\"master\""
-  } >> $(pwd)/.config
-  
-  # 确保不使用任何预设的补丁，因为我们是从 master 构建
+  sed -i "s|^CT_GCC_MIRRORS=.*|CT_GCC_MIRRORS=\"https://github.com/gcc-mirror/gcc/archive\"|" $(pwd)/.config
+  sed -i "s/^CT_GCC_ARCHIVE_FILENAME=\".*\"/CT_GCC_ARCHIVE_FILENAME=\"master\"/" $(pwd)/.config
+  sed -i "s/^CT_GCC_ARCHIVE_DIRNAME=\".*\"/CT_GCC_ARCHIVE_DIRNAME=\"gcc-master\"/" $(pwd)/.config
   sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
 }
 
-# --- 启用函数 ---
-# 取消下面的注释来使用 Git master 分支进行构建
-mingw-w64-master
-gcc-master
-
-echo "显示修改后的新版 .config"
+echo "显示新版"
 cat $(pwd)/.config
-echo "新版 .config 显示结束"
+echo "显示结束"
+
 
 /opt/ct-ng/bin/ct-ng build
 popd
@@ -127,4 +111,4 @@ popd
 sudo mv /opt/x-tools/${TARGET} .
 sudo chown -R root:root ${TARGET}
 sudo tar -cJvf ${TARGET}.tar.xz ${TARGET}
-sudo sha256sum ${TARGET}.tar.xz | awk '{ print $1 }' > ${TARGET}.tar.xz.sha256```
+sudo sha256sum ${TARGET}.tar.xz | awk '{ print $1 }' > ${TARGET}.tar.xz.sha256
