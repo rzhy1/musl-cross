@@ -87,6 +87,12 @@ mingw-w64-master() {
   sed -i "s/^CT_MINGW_W64_ARCHIVE_DIRNAME=\".*\"/CT_MINGW_W64_ARCHIVE_DIRNAME=\"mingw-w64-master\"/" $(pwd)/.config
   sed -i "s/^CT_MINGW_W64_SIGNATURE_FORMAT=\".*\"/CT_MINGW_W64_SIGNATURE_FORMAT=\"\"/" $(pwd)/.config
 }
+# 禁用mingw-w64的补丁
+  if grep -q "CT_MINGW_W64_PATCH" $(pwd)/.config; then
+      sed -i "s|^CT_MINGW_W64_PATCH=.*|CT_MINGW_W64_PATCH=\"n\"|" $(pwd)/.config
+  else
+      echo 'CT_MINGW_W64_PATCH="n"' >> $(pwd)/.config
+  fi
 # 启用mingw-w64最新版
 mingw-w64-master 
 
