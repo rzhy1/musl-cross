@@ -89,6 +89,8 @@ mingw-w64-master() {
 }
 # 启用mingw-w64最新版
 # mingw-w64-master 
+sed -i 's/^CT_MINGW_W64_V_V12_0=y/# CT_MINGW_W64_V_V12_0 is not set/' $(pwd)/.config
+sed -i 's/^# CT_MINGW_W64_V_V13_0 is not set/CT_MINGW_W64_V_V13_0=y/' $(pwd)/.config
 
 
 #sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.1.0\"/" $(pwd)/.config
