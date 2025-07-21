@@ -70,10 +70,10 @@ echo "显示结束"
 #sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
 
 # 更新ISL 
-#sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
+sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.27\"/" $(pwd)/.config
 
 # 更新MPFR 
-#sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
+sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 
 # 更新ZSTD 
 #sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
