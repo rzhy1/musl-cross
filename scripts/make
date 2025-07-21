@@ -101,7 +101,7 @@ gcc-master() {
   sed -i '/^# CT_GCC_PATCH_NONE is not set/a CT_GCC_PATCH_NONE=y' $(pwd)/.config
 }
 # 启用gcc最新版
-gcc-master
+# gcc-master
 
 echo "显示新版"
 cat $(pwd)/.config
