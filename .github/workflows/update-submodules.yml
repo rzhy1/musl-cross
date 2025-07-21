@@ -2,7 +2,7 @@ name: Auto Update Submodules
 on:
   schedule:
     - cron: '0 0 * * *'  # 每天UTC时间午夜更新
-  workflow_dispatch:  # 允许手动触发
+  workflow_dispatch:     # 允许手动触发
 
 jobs:
   update:
@@ -14,11 +14,17 @@ jobs:
           submodules: 'recursive'
           token: ${{ secrets.GITHUB_TOKEN }}
           
-      - name: Update submodules
+      - name: Force update submodules
         run: |
-          git submodule update --remote --merge
+          git submodule foreach --recursive 'git reset --hard'
+          git submodule update --init --remote --force --recursive
           git add builder
-          git config user.name "GitHub Actions"
-          git config user.email "actions@users.noreply.github.com"
-          git commit -m "Auto-update builder submodule" || echo "No changes"
-          git push
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "GitHub Actions"
+            git config user.email "actions@users.noreply.github.com"
+            git commit -m "Auto-update builder submodule"
+            git push
+          else
+            echo "No changes to commit"
+          fi
