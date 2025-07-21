@@ -1,3 +1,5 @@
 [submodule "builder"]
 	path = builder
 	url = https://github.com/crosstool-ng/crosstool-ng
+	[submodule "builder"]
+	branch = master
