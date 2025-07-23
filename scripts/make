@@ -82,7 +82,7 @@ sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 #sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.44\"/" $(pwd)/.config
 
 # 更新mingw-w64
-sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v12.0.0\"/" $(pwd)/.config
+#sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v12.0.0\"/" $(pwd)/.config
 
 mingw-w64-master() {
   sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
@@ -114,5 +114,5 @@ popd
 # tarball
 sudo mv /opt/x-tools/${TARGET} .
 sudo chown -R root:root ${TARGET}
-sudo tar -cJvf ${TARGET}.tar.xz ${TARGET}
-sudo sha256sum ${TARGET}.tar.xz | awk '{ print $1 }' > ${TARGET}.tar.xz.sha256
+sudo tar -cJvf ${TARGET}-1.tar.xz ${TARGET}
+sudo sha256sum ${TARGET}-1.tar.xz | awk '{ print $1 }' > ${TARGET}-1.tar.xz.sha256
