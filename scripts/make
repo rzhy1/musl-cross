@@ -65,9 +65,9 @@ sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v12.0.0\"/" $(pwd)/.config
 
 # 这是解决 MinGW-w64 v13+ 静态链接 pthread 问题的关键
-echo "CT_MINGW_W64_ENABLE_PTHREADS=y" >> $(pwd)/.config
-echo "CT_MINGW_W64_ENABLE_PTHREADS_STATIC=y" >> $(pwd)/.config
-echo "# CT_MINGW_W64_DISABLE_PTHREADS_EMUTLS is not set" >> $(pwd)/.config
+#echo "CT_MINGW_W64_ENABLE_PTHREADS=y" >> $(pwd)/.config
+#echo "CT_MINGW_W64_ENABLE_PTHREADS_STATIC=y" >> $(pwd)/.config
+#echo "# CT_MINGW_W64_DISABLE_PTHREADS_EMUTLS is not set" >> $(pwd)/.config
 
 mingw-w64-master() {
   sed -i "s|^CT_MINGW_W64_MIRRORS=.*|CT_MINGW_W64_MIRRORS=\"https://github.com/mingw-w64/mingw-w64/archive\"|" $(pwd)/.config
