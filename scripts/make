@@ -65,7 +65,7 @@ sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v13.0.0\"/" $(pwd)/.config
 
 # 更新gcc
-sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.2.0\"/" $(pwd)/.config
+#sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"15.2.0\"/" $(pwd)/.config
 
 echo "显示新版"
 cat $(pwd)/.config
