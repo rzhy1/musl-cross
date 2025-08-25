@@ -6,7 +6,7 @@ This is a simple, lightweight project for making cross-compilation toolchain wit
 
 | Target                         | Kernel  | Binutils | GCC    | Musl   |
 |--------------------------------|---------|----------|--------|--------|
-| x86_64-unknown-linux-musl      | 5.4.293 | 2.45     | 15.1.0 | 1.2.5  |
+| x86_64-w64-mingw32             | 5.4.293 | 2.45     | 15.2.0 | 1.2.5  |
 
 ## How to use
 
