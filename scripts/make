@@ -13,8 +13,8 @@ sudo apt-get install -y --no-install-recommends \
   libssl-dev \
   libtool-bin \
   lld
-sudo ln -s /usr/bin/lld /usr/bin/ld
-sudo ln -s /usr/bin/lld /usr/bin/ld.lld
+sudo ln -sf /usr/bin/lld /usr/bin/ld
+sudo ln -sf /usr/bin/lld /usr/bin/ld.lld
 
 # patch
 pushd builder
