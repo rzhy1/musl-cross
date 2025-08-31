@@ -46,6 +46,12 @@ echo "显示原版"
 cat $(pwd)/.config
 echo "显示结束"
 
+# 1. 设置并行任务数为0，让crosstool-ng自动使用所有CPU核心
+sed -i 's/^CT_PARALLEL_JOBS=.*/CT_PARALLEL_JOBS=0/' $(pwd)/.config
+
+# 2. 设置系统负载限制为0，即不限制，允许CPU满负荷运行
+sed -i 's/^CT_LOAD=.*/CT_LOAD=0/' $(pwd)/.config
+
 # 更新gmp
 #sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
 
