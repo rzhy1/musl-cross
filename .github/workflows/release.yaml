@@ -89,7 +89,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: x86_64-w64-mingw32-1.tar.xz.sha256
-          path: x86_64-w64-mingw64-1.tar.xz.sha256
+          path: x86_64-w64-mingw32-1.tar.xz.sha256
           if-no-files-found: error
           retention-days: 1
 
