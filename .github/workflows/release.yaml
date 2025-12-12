@@ -1,6 +1,8 @@
-name: Release
+name: Auto Update Submodules & Release
 
 on:
+  schedule:
+    - cron: '0 1 * * *' 
   workflow_dispatch:
   push:
     branches:
@@ -11,38 +13,70 @@ on:
   release:
     types:
       - released
-  schedule:
-    - cron: "0 1 * * *"
 
 jobs:
-  build:
-    name: Build
+
+  # -----------------------------
+  # 1. 更新子模块
+  # -----------------------------
+  update_submodules:
+    name: Auto Update Submodules
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+        with:
+          submodules: 'recursive'
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Force update submodules
+        run: |
+          git submodule foreach --recursive 'git reset --hard'
+          git submodule update --init --remote --force --recursive
+          git add builder
+          
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "GitHub Actions"
+            git config user.email "actions@users.noreply.github.com"
+            git commit -m "Auto-update builder submodule"
+            git push
+          else
+            echo "No changes to commit"
+          fi
+
+
+  # -----------------------------
+  # 2. 构建 + Release（必须等待更新子模块）
+  # -----------------------------
+  build_and_release:
+    name: Build & Release
     runs-on: ubuntu-24.04
-    strategy:
-      fail-fast: true
+    needs: update_submodules
+
     steps:
       - name: Checkout
         uses: actions/checkout@v6
         with:
           fetch-depth: 1
-          submodules: true   
+          submodules: true
 
       - name: Build
         run: |
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
-          
-      - name: Find build.log  # 查找并显示 build.log
+
+      - name: Find build.log
         if: failure()
         run: |
-             echo "查找 build.log 文件..."
-             find . -name "build.log" -print
-             echo "--- build.log 文件内容 (如果找到): ---"
-             find . -name "build.log" -print -exec cat {} \;  # 直接使用 find -exec cat
-             if ! find . -name "build.log" -print -quit > /dev/null 2>&1; then
-               echo "没有找到 build.log 文件 (再次确认)。"
-             fi
-     
+          echo "查找 build.log 文件..."
+          find . -name "build.log" -print
+          echo "--- build.log 文件内容 (如果找到): ---"
+          find . -name "build.log" -print -exec cat {} \;
+          if ! find . -name "build.log" -print -quit > /dev/null 2>&1; then
+            echo "没有找到 build.log 文件。"
+          fi
+
       - name: Upload package
         uses: actions/upload-artifact@v5
         with:
@@ -50,15 +84,15 @@ jobs:
           path: x86_64-w64-mingw32-1.tar.xz
           if-no-files-found: error
           retention-days: 1
-     
+
       - name: Upload checksum
         uses: actions/upload-artifact@v5
         with:
           name: x86_64-w64-mingw32-1.tar.xz.sha256
-          path: x86_64-w64-mingw32-1.tar.xz.sha256
+          path: x86_64-w64-mingw64-1.tar.xz.sha256
           if-no-files-found: error
           retention-days: 1
-          
+
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
@@ -67,5 +101,3 @@ jobs:
           allowUpdates: true
           artifacts: x86_64-w64-mingw32-1.tar.xz
           token: ${{ secrets.GITHUB_TOKEN }}
-
-      
