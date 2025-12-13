@@ -78,7 +78,7 @@ jobs:
           fi
 
       - name: Upload package
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: x86_64-w64-mingw32-1.tar.xz
           path: x86_64-w64-mingw32-1.tar.xz
@@ -86,7 +86,7 @@ jobs:
           retention-days: 1
 
       - name: Upload checksum
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: x86_64-w64-mingw32-1.tar.xz.sha256
           path: x86_64-w64-mingw32-1.tar.xz.sha256
