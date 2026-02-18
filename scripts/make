@@ -57,6 +57,9 @@ echo "显示结束"
 # 更新MPFR 
 #sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 
+# 更新zlib 
+#sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
+
 # 更新ZSTD 
 #sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 
