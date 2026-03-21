@@ -63,8 +63,11 @@ echo "显示结束"
 # 更新ZSTD 
 #sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
 
+# 更新MPC
+sed -i "s/^CT_MPC_VERSION=\"[^\"]*\"/CT_MPC_VERSION=\"1.4.0\"/" $(pwd)/.config
+
 # 更新binutils
-sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.46.0\"/" $(pwd)/.config
+#sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.46.0\"/" $(pwd)/.config
 
 # 更新mingw-w64
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v13.0.0\"/" $(pwd)/.config
