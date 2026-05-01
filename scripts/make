@@ -10,8 +10,7 @@ sudo apt-get install -y --no-install-recommends \
   gperf \
   help2man \
   libssl-dev \
-  libtool-bin \
-  zlib1g-dev libzstd-dev liblzma-dev
+  libtool-bin
 
 # patch
 pushd builder
@@ -71,12 +70,7 @@ sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FOR
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v13.0.0\"/" $(pwd)/.config
 
 # 更新gcc
-sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.1.0\"/" $(pwd)/.config
-sed -i 's/^CT_CC_GCC_ENABLE_LTO=y/CT_CC_GCC_ENABLE_LTO=n/' .config
-echo 'CT_CC_GCC_ENABLE_LTO=n' >> .config
-
-# ✅ 关闭 experimental
-sed -i 's/^CT_EXPERIMENTAL=y/CT_EXPERIMENTAL=n/' .config
+#sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.1.0\"/" $(pwd)/.config
 
 echo "显示新版"
 cat $(pwd)/.config
