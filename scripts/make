@@ -55,7 +55,7 @@ echo "显示结束"
 #sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 
 # 更新zlib 
-#sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
+sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
 
 # 更新ZSTD 
 #sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
@@ -67,7 +67,7 @@ sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FOR
 #sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.46.0\"/" $(pwd)/.config
 
 # 更新mingw-w64
-#sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v13.0.0\"/" $(pwd)/.config
+#sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v14.0.0\"/" $(pwd)/.config
 
 # 更新gcc
 #sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.1.0\"/" $(pwd)/.config
