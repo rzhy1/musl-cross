@@ -64,7 +64,7 @@ sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
 sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FORMATS="[^"]*"/CT_MPC_ARCHIVE_FORMATS=".tar.xz"/' $(pwd)/.config
 
 # 更新binutils
-#sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.46.0\"/" $(pwd)/.config
+sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.46.1\"/" $(pwd)/.config
 
 # 更新mingw-w64
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v14.0.0\"/" $(pwd)/.config
