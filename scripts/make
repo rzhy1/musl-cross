@@ -70,7 +70,7 @@ sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.47\"/" $(pwd)/
 #sed -i "s/^CT_MINGW_W64_VERSION=\"[^\"]*\"/CT_MINGW_W64_VERSION=\"v14.0.0\"/" $(pwd)/.config
 
 # 更新gcc
-sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.2.0\"/" $(pwd)/.config
+#sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.2.0\"/" $(pwd)/.config
 
 echo "显示新版"
 cat $(pwd)/.config
