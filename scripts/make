@@ -72,18 +72,10 @@ sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FOR
 # 更新gcc
 #sed -i "s/^CT_GCC_VERSION=\"[^\"]*\"/CT_GCC_VERSION=\"16.2.0\"/" $(pwd)/.config
 
-sed -i 's/^CT_MINGW_DEFAULT_MSVCRT_DEFAULT=y/# CT_MINGW_DEFAULT_MSVCRT_DEFAULT is not set/' $(pwd)/.config
-sed -i 's/^# CT_MINGW_DEFAULT_MSVCRT_UCRT is not set/CT_MINGW_DEFAULT_MSVCRT_UCRT=y/' $(pwd)/.config
-sed -i 's/^CT_CC_GCC_LTO_ZSTD=.*/CT_CC_GCC_LTO_ZSTD=y/' $(pwd)/.config
 sed -i 's/^CT_TARGET_CFLAGS=".*"/CT_TARGET_CFLAGS="-O3 -pipe"/' $(pwd)/.config
 sed -i 's/^CT_TARGET_LDFLAGS=".*"/CT_TARGET_LDFLAGS="-Wl,--gc-sections"/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_FORTRAN=y/# CT_CC_SUPPORT_FORTRAN is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_ADA=y/# CT_CC_SUPPORT_ADA is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_D=y/# CT_CC_SUPPORT_D is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_JIT=y/# CT_CC_SUPPORT_JIT is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_OBJC=y/# CT_CC_SUPPORT_OBJC is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_OBJCXX=y/# CT_CC_SUPPORT_OBJCXX is not set/' $(pwd)/.config
-sed -i 's/^CT_CC_SUPPORT_GOLANG=y/# CT_CC_SUPPORT_GOLANG is not set/' $(pwd)/.config
+sed -i '/^CT_CC_GCC_USE_GRAPHITE=/c\# CT_CC_GCC_USE_GRAPHITE is not set' $(pwd)/.config
+sed -i '/^CT_CC_GCC_USE_LTO=/c\# CT_CC_GCC_USE_LTO is not set' $(pwd)/.config
 
 echo "显示新版"
 cat $(pwd)/.config
