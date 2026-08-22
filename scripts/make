@@ -75,7 +75,7 @@ sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FOR
 sed -i 's/^CT_TARGET_CFLAGS=".*"/CT_TARGET_CFLAGS="-O3 -pipe"/' $(pwd)/.config
 sed -i 's/^CT_TARGET_LDFLAGS=".*"/CT_TARGET_LDFLAGS="-Wl,--gc-sections"/' $(pwd)/.config
 sed -i '/^CT_CC_GCC_USE_GRAPHITE=/c\# CT_CC_GCC_USE_GRAPHITE is not set' $(pwd)/.config
-sed -i '/^CT_CC_GCC_USE_LTO=/c\# CT_CC_GCC_USE_LTO is not set' $(pwd)/.config
+#sed -i '/^CT_CC_GCC_USE_LTO=/c\# CT_CC_GCC_USE_LTO is not set' $(pwd)/.config
 
 echo "显示新版"
 cat $(pwd)/.config
