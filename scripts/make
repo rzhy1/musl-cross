@@ -75,7 +75,7 @@ sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FOR
 sed -i 's/^CT_MINGW_DEFAULT_MSVCRT_DEFAULT=y/# CT_MINGW_DEFAULT_MSVCRT_DEFAULT is not set/' $(pwd)/.config
 sed -i 's/^# CT_MINGW_DEFAULT_MSVCRT_UCRT is not set/CT_MINGW_DEFAULT_MSVCRT_UCRT=y/' $(pwd)/.config
 sed -i 's/^CT_CC_GCC_LTO_ZSTD=.*/CT_CC_GCC_LTO_ZSTD=y/' $(pwd)/.config
-sed -i 's/^CT_CC_GCC_USE_GRAPHITE=y/# CT_CC_GCC_USE_GRAPHITE is not set/' $(pwd)/.config
+sed -i '/^CT_CC_GCC_USE_GRAPHITE=y/c\# CT_CC_GCC_USE_GRAPHITE is not set' .config
 sed -i 's/^CT_TARGET_CFLAGS=".*"/CT_TARGET_CFLAGS="-O3 -pipe"/' $(pwd)/.config
 sed -i 's/^CT_TARGET_LDFLAGS=".*"/CT_TARGET_LDFLAGS="-Wl,--gc-sections"/' $(pwd)/.config
 sed -i 's/^CT_CC_SUPPORT_FORTRAN=y/# CT_CC_SUPPORT_FORTRAN is not set/' $(pwd)/.config
