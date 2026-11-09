@@ -66,6 +66,23 @@ jobs:
           sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
 
+      - name: Diagnose Runner Node environment
+        if: always()
+        continue-on-error: true
+        run: |
+          echo "===== 当前工作目录 ====="
+          pwd
+          echo "===== 查找 actions-runner 安装目录 ====="
+          find / -maxdepth 6 -type d -name "actions-runner" 2>/dev/null || true
+          echo "===== 默认路径下的 externals ====="
+          ls -la /home/runner/actions-runner/externals/ 2>&1 || true
+          echo "===== node24 可执行文件 ====="
+          ls -la /home/runner/actions-runner/externals/node24/bin/ 2>&1 || true
+          echo "===== 系统 node 情况 ====="
+          which node || true
+          node --version || true
+          echo "===== 相关环境变量 ====="
+          env | grep -iE "runner|actions|node" || true
       - name: Find build.log
         if: failure()
         run: |
