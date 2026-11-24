@@ -61,43 +61,100 @@ jobs:
           fetch-depth: 1
           submodules: true
 
-      - name: Repair Runner Node.js Externals
+      - name: Repair Runner Node.js Externals (v2)
         run: |
           set -euo pipefail
 
           RUNNER_VERSION="2.338.2"
           RUNNER_ROOT="/home/runner/actions-runner"
-          NODE24_PATH="${RUNNER_ROOT}/externals/node24/bin/node"
+          NODE24_CANDIDATES=(
+            "${RUNNER_ROOT}/externals/node24/bin/node"
+            "${RUNNER_ROOT}/externals.${RUNNER_VERSION}/node24/bin/node"
+            "${RUNNER_ROOT}/cached/${RUNNER_VERSION}/externals/node24/bin/node"
+          )
 
           echo "===== 检查当前 node24 状态 ====="
-          if [ -x "${NODE24_PATH}" ]; then
-            "${NODE24_PATH}" --version
+          NODE24_OK=0
+          for p in "${NODE24_CANDIDATES[@]}"; do
+            if [ -x "$p" ]; then
+              echo "找到可用 node24: $p"
+              "$p" --version
+              NODE24_OK=1
+              break
+            fi
+          done
+          if [ "$NODE24_OK" -eq 1 ]; then
             echo "node24 可执行文件存在，无需修复。"
             exit 0
           fi
 
-          echo "node24 缺失或不可执行，开始从官方 tarball 修复..."
+          echo "node24 缺失，开始从官方 tarball 修复..."
 
-          # 下载官方 runner 包（与你版本一致）
           TMP_DIR="$(mktemp -d)"
           TARBALL="${TMP_DIR}/runner.tar.gz"
           curl -fsSL -o "${TARBALL}" \
             "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
 
-          # 备份损坏的 externals（不删除，便于事后排查）
-          if [ -d "${RUNNER_ROOT}/externals" ]; then
-            mv "${RUNNER_ROOT}/externals" "${RUNNER_ROOT}/externals.bak.$(date +%s)"
+          # 关键：先查看归档中 externals 的实际路径
+          echo "===== 归档中与 externals 相关的条目 ====="
+          ARCHIVE_EXTERNALS_PATH="$(tar -tzf "${TARBALL}" | grep -E '/externals($|/)' | head -n 5 || true)"
+          if [ -z "${ARCHIVE_EXTERNALS_PATH}" ]; then
+            echo "归档中未找到 externals，尝试列出顶层目录供排查："
+            tar -tzf "${TARBALL}" | awk -F/ '{print $1}' | sort -u | head -n 20
+            exit 1
+          fi
+          echo "${ARCHIVE_EXTERNALS_PATH}"
+
+          # 从第一条匹配路径推断前缀，例如 "_layout/" 或 "./"
+          FIRST_LINE="$(echo "${ARCHIVE_EXTERNALS_PATH}" | head -n 1)"
+          STRIP_COUNT=0
+          case "$FIRST_LINE" in
+            _layout/*) STRIP_COUNT=1 ;;
+            ./*) STRIP_COUNT=0 ;;
+            *) STRIP_COUNT=0 ;;
+          esac
+          echo "推断的 strip-components 数量: ${STRIP_COUNT}"
+
+          # 定位并备份当前损坏的 externals 目录（适配带版本号或 cached 下的情况）
+          EXISTING_DIR=""
+          for d in \
+            "${RUNNER_ROOT}/externals" \
+            "${RUNNER_ROOT}/externals.${RUNNER_VERSION}" \
+            "${RUNNER_ROOT}/cached/${RUNNER_VERSION}/externals"; do
+            if [ -d "$d" ]; then
+              EXISTING_DIR="$d"
+              break
+            fi
+          done
+          if [ -n "$EXISTING_DIR" ]; then
+            echo "备份现有目录: $EXISTING_DIR"
+            mv "$EXISTING_DIR" "${EXISTING_DIR}.bak.$(date +%s)"
           fi
 
-          # 只提取 tarball 中的 externals 目录到 Runner 根目录
-          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" externals
+          # 提取到 RUNNER_ROOT，去除前缀后 externals 会落在正确位置
+          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" \
+            --strip-components="${STRIP_COUNT}" \
+            --wildcards '*/externals' './externals' 'externals' 2>/dev/null || \
+          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" \
+            --strip-components="${STRIP_COUNT}" \
+            --wildcards '*externals*'
 
-          # 验证修复结果
-          echo "===== 修复后的 node24 版本 ====="
-          "${NODE24_PATH}" --version
+          # 验证修复
+          echo "===== 修复后验证 ====="
+          for p in "${NODE24_CANDIDATES[@]}"; do
+            if [ -x "$p" ]; then
+              "$p" --version && NODE24_OK=1 && break
+            fi
+          done
+          if [ "$NODE24_OK" -ne 1 ]; then
+            echo "修复后仍未找到可用的 node24，请检查归档结构。"
+            # 打印提取后的实际内容辅助排查
+            find "${RUNNER_ROOT}" -maxdepth 3 -type d -name "externals*" 2>/dev/null || true
+            exit 1
+          fi
 
-          # 清理临时文件
           rm -rf "${TMP_DIR}"
+          echo "Externals 修复完成。"
           
       - name: Build
         run: |
