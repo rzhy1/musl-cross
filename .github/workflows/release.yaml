@@ -51,7 +51,7 @@ jobs:
   # -----------------------------
   build_and_release:
     name: Build & Release
-    runs-on: ubuntu-26.04
+    runs-on: ubuntu-latest
     needs: update_submodules
 
     steps:
@@ -61,6 +61,44 @@ jobs:
           fetch-depth: 1
           submodules: true
 
+      - name: Repair Runner Node.js Externals
+        run: |
+          set -euo pipefail
+
+          RUNNER_VERSION="2.338.2"
+          RUNNER_ROOT="/home/runner/actions-runner"
+          NODE24_PATH="${RUNNER_ROOT}/externals/node24/bin/node"
+
+          echo "===== 检查当前 node24 状态 ====="
+          if [ -x "${NODE24_PATH}" ]; then
+            "${NODE24_PATH}" --version
+            echo "node24 可执行文件存在，无需修复。"
+            exit 0
+          fi
+
+          echo "node24 缺失或不可执行，开始从官方 tarball 修复..."
+
+          # 下载官方 runner 包（与你版本一致）
+          TMP_DIR="$(mktemp -d)"
+          TARBALL="${TMP_DIR}/runner.tar.gz"
+          curl -fsSL -o "${TARBALL}" \
+            "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
+
+          # 备份损坏的 externals（不删除，便于事后排查）
+          if [ -d "${RUNNER_ROOT}/externals" ]; then
+            mv "${RUNNER_ROOT}/externals" "${RUNNER_ROOT}/externals.bak.$(date +%s)"
+          fi
+
+          # 只提取 tarball 中的 externals 目录到 Runner 根目录
+          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" externals
+
+          # 验证修复结果
+          echo "===== 修复后的 node24 版本 ====="
+          "${NODE24_PATH}" --version
+
+          # 清理临时文件
+          rm -rf "${TMP_DIR}"
+          
       - name: Build
         run: |
           sudo rm -rf /opt/*
