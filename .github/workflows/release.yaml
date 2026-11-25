@@ -61,123 +61,21 @@ jobs:
           fetch-depth: 1
           submodules: true
 
-      - name: Repair Runner Node.js Externals (v2)
-        run: |
-          set -euo pipefail
-
-          RUNNER_VERSION="2.338.2"
-          RUNNER_ROOT="/home/runner/actions-runner"
-          NODE24_CANDIDATES=(
-            "${RUNNER_ROOT}/externals/node24/bin/node"
-            "${RUNNER_ROOT}/externals.${RUNNER_VERSION}/node24/bin/node"
-            "${RUNNER_ROOT}/cached/${RUNNER_VERSION}/externals/node24/bin/node"
-          )
-
-          echo "===== 检查当前 node24 状态 ====="
-          NODE24_OK=0
-          for p in "${NODE24_CANDIDATES[@]}"; do
-            if [ -x "$p" ]; then
-              echo "找到可用 node24: $p"
-              "$p" --version
-              NODE24_OK=1
-              break
-            fi
-          done
-          if [ "$NODE24_OK" -eq 1 ]; then
-            echo "node24 可执行文件存在，无需修复。"
-            exit 0
-          fi
-
-          echo "node24 缺失，开始从官方 tarball 修复..."
-
-          TMP_DIR="$(mktemp -d)"
-          TARBALL="${TMP_DIR}/runner.tar.gz"
-          curl -fsSL -o "${TARBALL}" \
-            "https://github.com/actions/runner/releases/download/v${RUNNER_VERSION}/actions-runner-linux-x64-${RUNNER_VERSION}.tar.gz"
-
-          # 关键：先查看归档中 externals 的实际路径
-          echo "===== 归档中与 externals 相关的条目 ====="
-          ARCHIVE_EXTERNALS_PATH="$(tar -tzf "${TARBALL}" | grep -E '/externals($|/)' | head -n 5 || true)"
-          if [ -z "${ARCHIVE_EXTERNALS_PATH}" ]; then
-            echo "归档中未找到 externals，尝试列出顶层目录供排查："
-            tar -tzf "${TARBALL}" | awk -F/ '{print $1}' | sort -u | head -n 20
-            exit 1
-          fi
-          echo "${ARCHIVE_EXTERNALS_PATH}"
-
-          # 从第一条匹配路径推断前缀，例如 "_layout/" 或 "./"
-          FIRST_LINE="$(echo "${ARCHIVE_EXTERNALS_PATH}" | head -n 1)"
-          STRIP_COUNT=0
-          case "$FIRST_LINE" in
-            _layout/*) STRIP_COUNT=1 ;;
-            ./*) STRIP_COUNT=0 ;;
-            *) STRIP_COUNT=0 ;;
-          esac
-          echo "推断的 strip-components 数量: ${STRIP_COUNT}"
-
-          # 定位并备份当前损坏的 externals 目录（适配带版本号或 cached 下的情况）
-          EXISTING_DIR=""
-          for d in \
-            "${RUNNER_ROOT}/externals" \
-            "${RUNNER_ROOT}/externals.${RUNNER_VERSION}" \
-            "${RUNNER_ROOT}/cached/${RUNNER_VERSION}/externals"; do
-            if [ -d "$d" ]; then
-              EXISTING_DIR="$d"
-              break
-            fi
-          done
-          if [ -n "$EXISTING_DIR" ]; then
-            echo "备份现有目录: $EXISTING_DIR"
-            mv "$EXISTING_DIR" "${EXISTING_DIR}.bak.$(date +%s)"
-          fi
-
-          # 提取到 RUNNER_ROOT，去除前缀后 externals 会落在正确位置
-          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" \
-            --strip-components="${STRIP_COUNT}" \
-            --wildcards '*/externals' './externals' 'externals' 2>/dev/null || \
-          tar -xzf "${TARBALL}" -C "${RUNNER_ROOT}" \
-            --strip-components="${STRIP_COUNT}" \
-            --wildcards '*externals*'
-
-          # 验证修复
-          echo "===== 修复后验证 ====="
-          for p in "${NODE24_CANDIDATES[@]}"; do
-            if [ -x "$p" ]; then
-              "$p" --version && NODE24_OK=1 && break
-            fi
-          done
-          if [ "$NODE24_OK" -ne 1 ]; then
-            echo "修复后仍未找到可用的 node24，请检查归档结构。"
-            # 打印提取后的实际内容辅助排查
-            find "${RUNNER_ROOT}" -maxdepth 3 -type d -name "externals*" 2>/dev/null || true
-            exit 1
-          fi
-
-          rm -rf "${TMP_DIR}"
-          echo "Externals 修复完成。"
+      - name: Free Disk Space
+        uses: jlumbroso/free-disk-space@main
+        with:
+          tool-cache: true
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: false
+          docker-images: true
+          swap-storage: true
           
       - name: Build
         run: |
-          sudo rm -rf /opt/*
           ./scripts/make x86_64-w64-mingw32
 
-      - name: Diagnose Runner Node environment
-        if: always()
-        continue-on-error: true
-        run: |
-          echo "===== 当前工作目录 ====="
-          pwd
-          echo "===== 查找 actions-runner 安装目录 ====="
-          find / -maxdepth 6 -type d -name "actions-runner" 2>/dev/null || true
-          echo "===== 默认路径下的 externals ====="
-          ls -la /home/runner/actions-runner/externals/ 2>&1 || true
-          echo "===== node24 可执行文件 ====="
-          ls -la /home/runner/actions-runner/externals/node24/bin/ 2>&1 || true
-          echo "===== 系统 node 情况 ====="
-          which node || true
-          node --version || true
-          echo "===== 相关环境变量 ====="
-          env | grep -iE "runner|actions|node" || true
       - name: Find build.log
         if: failure()
         run: |
@@ -193,7 +91,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: x86_64-w64-mingw32-1.tar.xz
-          path: ${{ github.workspace }}/x86_64-w64-mingw32-1.tar.xz
           if-no-files-found: error
           retention-days: 1
 
@@ -201,7 +98,7 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: x86_64-w64-mingw32-1.tar.xz.sha256
-          path: ${{ github.workspace }}/x86_64-w64-mingw32-1.tar.xz
+          path: x86_64-w64-mingw32-1.tar.xz
           if-no-files-found: error
           retention-days: 1
 
