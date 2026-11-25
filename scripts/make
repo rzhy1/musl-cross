@@ -47,21 +47,22 @@ echo "显示结束"
 
 # 更新gmp
 #sed -i "s/^CT_GMP_VERSION=\"[^\"]*\"/CT_GMP_VERSION=\"6.3.0\"/" $(pwd)/.config
+sed -i 's/^# CT_CC_GCC_USE_GRAPHITE is not set$/CT_CC_GCC_USE_GRAPHITE=y/' "$(pwd)/.config"
 
 # 更新ISL 
-sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.28\"/" $(pwd)/.config
+#sed -i "s/^CT_ISL_VERSION=\"[^\"]*\"/CT_ISL_VERSION=\"0.28\"/" $(pwd)/.config
 
 # 更新MPFR 
 #sed -i "s/^CT_MPFR_VERSION=\"[^\"]*\"/CT_MPFR_VERSION=\"4.2.2\"/" $(pwd)/.config
 
 # 更新zlib 
-sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
+#sed -i "s/^CT_ZLIB_VERSION=\"[^\"]*\"/CT_ZLIB_VERSION=\"1.3.2\"/" $(pwd)/.config
 
 # 更新ZSTD 
-#sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.5.7\"/" $(pwd)/.config
+sed -i "s/^CT_ZSTD_VERSION=\"[^\"]*\"/CT_ZSTD_VERSION=\"1.6.0\"/" $(pwd)/.config
 
 # 更新MPC
-sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FORMATS="[^"]*"/CT_MPC_ARCHIVE_FORMATS=".tar.xz"/' $(pwd)/.config
+#sed -i 's/^CT_MPC_VERSION="[^"]*"/CT_MPC_VERSION="1.4.1"/; s/^CT_MPC_ARCHIVE_FORMATS="[^"]*"/CT_MPC_ARCHIVE_FORMATS=".tar.xz"/' $(pwd)/.config
 
 # 更新binutils
 #sed -i "s/^CT_BINUTILS_VERSION=\"[^\"]*\"/CT_BINUTILS_VERSION=\"2.47\"/" $(pwd)/.config
